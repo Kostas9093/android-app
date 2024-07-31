@@ -47,7 +47,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Fitness Progress Tracker</h1>
+      <h1>Weight Progress Tracker</h1>
       <MeasurementForm onCalculate={calculateProgress} />
     </div>
   );

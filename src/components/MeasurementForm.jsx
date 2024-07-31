@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-
 // Component to display progress results
 const ProgressDisplay = ({ progress }) => {
   if (!progress) return null; // Return nothing if there's no progress to display
@@ -43,7 +42,6 @@ ProgressDisplay.propTypes = {
     fatKilosDiff: PropTypes.number,
   }),
 };
-
 const MeasurementForm = () => {
   const [oldMeasurements, setOldMeasurements] = useState({
     weight: '',

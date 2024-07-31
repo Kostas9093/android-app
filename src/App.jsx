@@ -4,7 +4,7 @@ import './App.css';
 import MeasurementForm from './components/MeasurementForm';
 
 function App() {
-  const [setProgress] = useState(null);
+  const [progress, setProgress] = useState(null);
 
   const calculateProgress = (data) => {
     const weightDiff = (data.newWeight - data.oldWeight).toFixed(2);

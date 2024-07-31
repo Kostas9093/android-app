@@ -74,10 +74,12 @@ h1{
   font-weight: 900;
   color:#0fff0a;
   margin-left:10px;
+  font-family: italic;
 }
 h2{
   text-align: center;
   color:#0fff0a;
+  font-family: italic;
 }
 
 #compare{

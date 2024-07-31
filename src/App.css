@@ -14,7 +14,7 @@ body{
 margin:0;
 padding:0;
 border:none;
-background: black;
+background: rgba(0, 0, 0);
 }
 
 div{
@@ -71,6 +71,7 @@ label {
 
 h1{
   text-align: center;
+  font-weight: 900;
   color:#0fff0a;
   margin-left:10px;
 }
@@ -118,8 +119,63 @@ h2{
       --angle:360deg;
   }
 } 
+#clear{
+  margin-top: 20px;
+  padding: 10px;
+  width:100px;
+  margin-left:40%;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10%;
+  position:relative;
+}
+
+#clear{
+  background: #1c1f2b;
+  text-align: center;
+  border-radius: 10px;
+  position: relative;
+
+} 
+
+@property --angle{
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+ #clear::after, #clear::before{
+  content: '';
+  position: absolute;
+  height: 100%;
+  width:100%;
+  background-image: conic-gradient(from var(--angle),  #4845ff, #00ff99, #006aff, #ff0095, #ff4545);
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: -1;
+  padding: 3px;
+  border-radius: 10px;
+  animation: 3s spin linear infinite;
+}
+#clear::before{
+  filter: blur(1.5rem);
+  opacity: 0.5;
+}
+@keyframes spin{
+  from{
+      --angle: 0deg;
+  }
+  to{
+      --angle:360deg;
+  }
+} 
+
 #history{
   text-align: center;
   color:white;
   list-style: none;
+  font-size: small;
 }

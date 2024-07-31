@@ -17,12 +17,9 @@ const ProgressDisplay = ({ progress }) => {
     <div className="new">
       <h2>Progress Results</h2>
       <p>{weightDiff >= 0 ? `You gained ${weightDiff} kg` : `You lost ${Math.abs(weightDiff).toFixed(2)} kg`}</p>
-      <p>{fatDiff >= 0 ? `You gained ${Math.abs(fatDiff).toFixed(2)} % of Fat Mass` : `You lost ${Math.abs(fatDiff).toFixed(2)}% of Fat Mass`}</p>
-      <p> which is {fatKilosDiff >= 0 ? ` ${Math.abs(fatKilosDiff).toFixed(2)} kilos of Fat` : ` ${Math.abs(fatKilosDiff).toFixed(2)} kilos of Fat`}</p>
-      <p>{muscleDiff >= 0 ? `You gained ${Math.abs(muscleDiff).toFixed(2)} % of Muscle Mass` : `You lost ${Math.abs(muscleDiff).toFixed(2)}% of Muscle Mass`}</p>
-      <p> which is {musleKilosDiff >= 0 ? ` ${Math.abs(musleKilosDiff).toFixed(2)} kilos of Muscles` : ` ${Math.abs(musleKilosDiff).toFixed(2)} kilos of Muscles`}</p>
-      <p>{waterDiff >=0 ? `You gained ${Math.abs(waterDiff).toFixed(2)} % of Water` : `You Lost ${Math.abs(waterDiff).toFixed(2)} % of Water`}</p>
-      <p>which is {Math.abs(waterDiff * 1).toFixed(2)} kilos of Water</p>
+      <p>{fatDiff >= 0 ? `You gained ${Math.abs(fatDiff).toFixed(2)} % of Fat Mass` : `You lost ${Math.abs(fatDiff).toFixed(2)}% of Fat Mass`} which is {fatKilosDiff >= 0 ? ` ${Math.abs(fatKilosDiff).toFixed(2)} kilos of Fat` : ` ${Math.abs(fatKilosDiff).toFixed(2)} kilos of Fat`}</p>
+      <p>{muscleDiff >= 0 ? `You gained ${Math.abs(muscleDiff).toFixed(2)} % of Muscle Mass` : `You lost ${Math.abs(muscleDiff).toFixed(2)}% of Muscle Mass`} which is {musleKilosDiff >= 0 ? ` ${Math.abs(musleKilosDiff).toFixed(2)} kilos of Muscles` : ` ${Math.abs(musleKilosDiff).toFixed(2)} kilos of Muscles`}</p>
+      <p>{waterDiff >=0 ? `You gained ${Math.abs(waterDiff).toFixed(2)} % of Water` : `You Lost ${Math.abs(waterDiff).toFixed(2)} % of Water`} which is {Math.abs(waterDiff * 1).toFixed(2)} kilos of Water</p>
     </div>
   );
 };
@@ -107,10 +104,18 @@ const MeasurementForm = () => {
     localStorage.setItem('oldMeasurements', JSON.stringify(newMeasurements));
   };
 
+    // Button clear history
+    const handleClearHistory = () => {
+      setMeasurementHistory([]);
+      localStorage.removeItem('measurementHistory');
+      localStorage.removeItem('oldMeasurements');
+    };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <h2>Old Measurements</h2>
+        
+        <h2>Latest Measurements</h2>
         <div>
           <label>Weight (kg):</label>
           <input
@@ -206,6 +211,9 @@ const MeasurementForm = () => {
           </li>
         ))}
       </ul>
+      {measurementHistory.length > 0 && (
+      <button id='clear' onClick={handleClearHistory}>Clear History</button>
+      )}
     </div>
   );
 };

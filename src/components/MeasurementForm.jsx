@@ -303,19 +303,21 @@ const MeasurementForm = () => {
   };
 
     // Button clear history & clear measurement history and old measurements
-    const handleClearHistory = () => {
-      setMeasurementHistory([]);
-      localStorage.removeItem('measurementHistory');
-      localStorage.removeItem('oldMeasurements');
-    };
+    // const handleClearHistory = () => {
+    //   setMeasurementHistory([]);
+    //   localStorage.removeItem('measurementHistory');
+    //   localStorage.removeItem('oldMeasurements');
+    // };
 
-//   // Clear measurement history and old measurements
-//   const handleClearHistory = () => {
-//     setMeasurementHistory([]);
-//     localStorage.removeItem('measurementHistory');
-//     localStorage.removeItem('oldMeasurements');
-//   };
-
+// Clear the last entry in the measurement history and removes old measurements fromn local Storage
+const handleClearHistory = () => {
+  if (measurementHistory.length > 0) {
+    const updatedHistory = measurementHistory.slice(0, -1); // Remove the last entry
+    setMeasurementHistory(updatedHistory);
+    localStorage.setItem('measurementHistory', JSON.stringify(updatedHistory));
+    localStorage.removeItem('oldMeasurements');
+  }
+};
 
   return (
     <div>

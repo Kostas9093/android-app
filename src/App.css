@@ -176,6 +176,7 @@ h2{
 } 
 
 #history{
+  /* display: flex; */
   text-align: center;
   color:white;
   list-style: none;

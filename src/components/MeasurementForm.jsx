@@ -200,10 +200,10 @@ const ProgressDisplay = ({ progress }) => {
   return (
     <div className="new">
       <h2>Progress Results</h2>
-      <p>{weightDiff >= 0 ? `You gained ${weightDiff} kg` : `You lost ${Math.abs(weightDiff).toFixed(2)} kg`}</p>
-      <p>{fatDiff >= 0 ? `You gained ${Math.abs(fatDiff).toFixed(2)} % of Fat Mass` : `You lost ${Math.abs(fatDiff).toFixed(2)}% of Fat Mass`} which is {fatKilosDiff >= 0 ?  `${Math.abs(fatKilosDiff).toFixed(2)} kilos of Fat` :  `${Math.abs(fatKilosDiff).toFixed(2)} kilos of Fat`}</p>
-      <p>{muscleDiff >= 0 ? `You gained ${Math.abs(muscleDiff).toFixed(2)} % of Muscle Mass` : `You lost ${Math.abs(muscleDiff).toFixed(2)}% of Muscle Mass`} which is {musleKilosDiff >= 0 ?  `${Math.abs(musleKilosDiff).toFixed(2)} kilos of Muscles` :  `${Math.abs(musleKilosDiff).toFixed(2)} kilos of Muscles`}</p>
-      <p>{waterDiff >=0 ? `You gained ${Math.abs(waterDiff).toFixed(2)} % of Water` : `You Lost ${Math.abs(waterDiff).toFixed(2)} % of Water`} which is {Math.abs(waterDiff / 100 * 100).toFixed(2)} kilos of Water</p>
+      <p>{weightDiff > 0 ? `You gained ${weightDiff} kg` : weightDiff < 0 ? `You lost ${Math.abs(weightDiff).toFixed(2)} kg` : `${Math.abs(weightDiff).toFixed(2)} kg`}</p>
+      <p>{fatDiff > 0 ? `You gained ${Math.abs(fatDiff).toFixed(2)} % of Fat Mass` : fatDiff < 0 ? `You lost ${Math.abs(fatDiff).toFixed(2)}% of Fat Mass` : `${Math.abs(fatDiff).toFixed(2)}% of Fat Mass`} which is {fatKilosDiff > 0 ?  `${Math.abs(fatKilosDiff).toFixed(2)} kilos of Fat` :  `${Math.abs(fatKilosDiff).toFixed(2)} kilos of Fat`}</p>
+      <p>{muscleDiff > 0 ? `You gained ${Math.abs(muscleDiff).toFixed(2)} % of Muscle Mass` : muscleDiff < 0 ? `You lost ${Math.abs(muscleDiff).toFixed(2)}% of Muscle Mass` : `${Math.abs(muscleDiff).toFixed(2)}% of Muscle Mass`} which is {musleKilosDiff > 0 ?  `${Math.abs(musleKilosDiff).toFixed(2)} kilos of Muscles` :  `${Math.abs(musleKilosDiff).toFixed(2)} kilos of Muscles`}</p>
+      <p>{waterDiff > 0 ? `You gained ${Math.abs(waterDiff).toFixed(2)} % of Water` : waterDiff < 0 ? `You Lost ${Math.abs(waterDiff).toFixed(2)} % of Water` : `${Math.abs(waterDiff).toFixed(2)}`} which is {Math.abs(waterDiff / 100 * 100).toFixed(2)} kilos of Water</p>
     </div>
   );
 };

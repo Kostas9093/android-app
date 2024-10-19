@@ -126,8 +126,12 @@ MeasurementForm.propTypes = {
     localStorage.setItem('oldMeasurements', JSON.stringify(newMeasurements));
   };
   const handleExit = () => {
-    if (window.confirm("Are you sure you want to exit?")) {
-      window.close(); // This will attempt to close the browser tab
+    if (window.confirm("Are you sure you want to exit the app?")) {
+      if (navigator.app && navigator.app.exitApp) {
+        navigator.app.exitApp();  // This should terminate the app in a WebView if supported
+      } else {
+        alert("Exit functionality is not supported on this platform.");
+      }
     }
   };
   return (

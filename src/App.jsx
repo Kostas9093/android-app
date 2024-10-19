@@ -1,54 +1,46 @@
-// src/App.js
-import  { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './App.css';
 import MeasurementForm from './components/MeasurementForm';
+import HistoryPage from './components/HistoryPage';
+import WelcomePage from './components/WelcomePage';
 
 function App() {
-  const [progress, setProgress] = useState(null);
+  const [isWelcome, setIsWelcome] = useState(true);   // Step 1: Welcome Page
+  const [showHistory, setShowHistory] = useState(false); // Step 3: Show History
+  const [showResults, setShowResults] = useState(false); // Track if we are showing results instead of form
 
-  const calculateProgress = (data) => {
-    const weightDiff = (data.newWeight - data.oldWeight).toFixed(2);
-    const fatDiff = (data.newFat - data.oldFat).toFixed(2);
-    const muscleDiff = (data.newMuscle - data.oldMuscle).toFixed(2);
-    const waterDiff = (data.newWater - data.oldWater).toFixed(2);
-
-    const oldFatKilos = ((data.oldWeight * data.oldFat) / 100).toFixed(2);
-    const newFatKilos = ((data.newWeight * data.newFat) / 100).toFixed(2);
-    const oldMuscleKilos = ((data.oldWeight * data.oldMuscle) / 100).toFixed(2);
-    const newMuscleKilos = ((data.newWeight * data.newMuscle) / 100).toFixed(2);
-
-    setProgress({
-      weightDiff,
-      fatDiff,
-      muscleDiff,
-      waterDiff,
-      oldFatKilos,
-      newFatKilos,
-      oldMuscleKilos,
-      newMuscleKilos
-    });
+  // Function to handle navigation between welcome, history, and main form
+  const handleWelcomeStart = () => {
+    setIsWelcome(false);
   };
 
-  useEffect(() => {
-    const savedMeasurements = JSON.parse(localStorage.getItem('oldMeasurements'));
-    if (savedMeasurements) {
-      setProgress({
-        weightDiff: 0,
-        fatDiff: 0,
-        muscleDiff: 0,
-        waterDiff: 0,
-        oldFatKilos: ((savedMeasurements.oldWeight * savedMeasurements.oldFat) / 100).toFixed(2),
-        newFatKilos: 0,
-        oldMuscleKilos: ((savedMeasurements.oldWeight * savedMeasurements.oldMuscle) / 100).toFixed(2),
-        newMuscleKilos: 0
-      });
-    }
-  }, []);
+  const handleShowHistory = () => {
+    setShowHistory(true);
+  };
+
+  const handleBackToMain = () => {
+    setShowResults(false);  // Go back to form by hiding results
+    setShowHistory(false);
+  };
 
   return (
     <div className="App">
-      <h1>Weight Progress Tracker</h1>
-      <MeasurementForm onCalculate={calculateProgress} />
+      {isWelcome ? (
+        <WelcomePage onStart={handleWelcomeStart} />  // Step 1: Showing welcome page first
+      ) : showHistory ? (
+        <HistoryPage onBack={handleBackToMain} />    // Step 3: Showing history
+      ) : (
+        <>
+          <h1>Weight Progress Tracker</h1>
+          <MeasurementForm 
+            onShowHistory={handleShowHistory} 
+            onBackToMain={handleBackToMain}
+            showResults={showResults}         // Pass showResults state to MeasurementForm
+            setShowResults={setShowResults}   // Allow MeasurementForm to control result visibility
+          />
+         
+        </>
+      )}
     </div>
   );
 }

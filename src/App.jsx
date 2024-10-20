@@ -19,8 +19,9 @@ function App() {
   };
 
   const handleBackToMain = () => {
-    setShowResults(false);  // Go back to form by hiding results
-    setShowHistory(false);
+    setShowResults(false);  //  Hide results
+    setShowHistory(false);   // Hide history
+    setIsWelcome(true);     // Show welcome page
   };
 
   return (

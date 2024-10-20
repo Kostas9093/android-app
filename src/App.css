@@ -348,9 +348,9 @@ h2{
 /* Basic styling */
 .welcome {
   display: flex;
-  font-size: 20px;
+  font-size: 24px;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   height: 100vh;
   background-color: #282c34;
@@ -358,11 +358,15 @@ h2{
 }
 
 .start-box {
-  background-color: rgb(110, 139, 113);
-  margin-top: 15px;
-  
+  background-color: rgb(85, 119, 88);
+  margin-top: 50px;
+  width:340px;
   color: rgb(39, 36, 36);
   font-size: 20px;
   text-align: center;
   cursor: pointer;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3), 
+    -5px -5px 15px rgba(255, 255, 255, 0.1);
+padding: 20px;
+border-radius: 8px;
 }

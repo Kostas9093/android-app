@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-
-
 // Component to display progress results
 const ProgressDisplay = ({ progress, onBackToMain }) => {
   if (!progress) return null;
@@ -43,7 +41,7 @@ ProgressDisplay.propTypes = {
   
 };
 
-const MeasurementForm = ({ onShowHistory, onBackToMain, showResults, setShowResults }) => {
+const MeasurementForm = ({ onShowHistory, onBackToMain, showResults, setShowResults,onBackToForm }) => {
   const [oldMeasurements, setOldMeasurements] = useState({
     weight: '',
     fat: '',
@@ -195,14 +193,13 @@ MeasurementForm.propTypes = {
           />
 
           <button id="compare" type="submit">Compare</button>
-          
-          
+          <button id="back" onClick={onBackToMain}>Back</button>
         </form>
       ) : (
         <ProgressDisplay progress={progress} onBackToMain={onBackToMain} />
         
       )}
-   
+    
       <button id="showHistory" onClick={onShowHistory}>Show History</button>
       <button id="exit" onClick={handleExit}>Exit</button>
     </div>

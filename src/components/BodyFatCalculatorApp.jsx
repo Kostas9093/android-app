@@ -39,14 +39,21 @@ const BodyFatCalculatorApp = ({ onBack }) => {
     return (
         <div className="body-fat-calculator">
             <h2>Body Fat Calculator</h2>
+
             <form onSubmit={handleSubmit}>
-                <label id="Gen">Gender: </label>
-                <select value={gender} onChange={(e) => setGender(e.target.value)} required>
-                    <option value="">Select</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                </select>
-                <br />
+
+         <div className="field">
+
+        <label id="Gen">Gender:</label>
+         <select value={gender} onChange={(e) => setGender(e.target.value)} required>
+         <option value="">Select</option>
+         <option value="male">Male</option>
+         <option value="female">Female</option>
+    </select>
+        </div>
+        
+<div className="field"></div>
+                
                 
                 <label>Age: </label>
                 <input 

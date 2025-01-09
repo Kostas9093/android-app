@@ -18,7 +18,7 @@ background: rgba(0, 0, 0);
 }
 
 div{
-  width:400px;
+  width:380px;
 } 
 p{
   color:white;
@@ -29,17 +29,17 @@ form , .new{
   border:none;
   flex-direction: column;
   max-width:100rem;
-  height:100%;
-  margin-left:0px;
+  height:100%; 
   text-align: center;
   color:white;
   font-size:small;
+  margin:0px;
 }
 
 input{
   margin:5px;
   height:13px;
-  width:230px;
+  width:160px;
   justify-content: center;
   align-items: center;
   align-self: center;

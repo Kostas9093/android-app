@@ -18,7 +18,7 @@ background: rgba(0, 0, 0);
 }
 
 div{
-  width:410px;
+  width:400px;
 } 
 p{
   color:white;
@@ -428,9 +428,9 @@ border-radius: 8px;
   display: block; /* Ensures they stack properly */
 }
 
- /* .body-fat-calculator button:hover {
+ .body-fat-calculator  button:hover {
   background-color: #45a049;
-}  */
+} 
 
 .body-fat-calculator .field {
   display: flex;
@@ -446,3 +446,4 @@ border-radius: 8px;
   margin-top: 5px; /* Add space below the label */
   text-align: center; /* Optional: center text in the dropdown */
 }
+

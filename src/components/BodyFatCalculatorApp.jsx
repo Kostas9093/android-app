@@ -1,5 +1,9 @@
 // src/components/BodyFatCalculatorApp.js
 import  { useState } from 'react';
+import PropTypes from 'prop-types';
+
+
+
 
 
 const BodyFatCalculatorApp = ({ onBack }) => {
@@ -8,6 +12,11 @@ const BodyFatCalculatorApp = ({ onBack }) => {
     const [weight, setWeight] = useState('');
     const [measurements, setMeasurements] = useState({ chest: '', abdomen: '', thigh: '' });
     const [bodyFat, setBodyFat] = useState(null);
+
+    // Add prop-types validation
+    BodyFatCalculatorApp.propTypes = {
+     onBack: PropTypes.func.isRequired,
+     };
 
     const handleMeasurementChange = (e) => {
         setMeasurements({

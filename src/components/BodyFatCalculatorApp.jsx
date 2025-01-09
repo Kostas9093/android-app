@@ -112,7 +112,7 @@ const BodyFatCalculatorApp = ({ onBack }) => {
                     <p>{bodyFat}%</p>
                 </div>
             )}
-             <button onClick={onBack}>Back to Welcome</button>
+            <button onClick={onBack}>Back to Welcome</button>
         </div>
     );
 };

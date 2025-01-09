@@ -41,7 +41,7 @@ ProgressDisplay.propTypes = {
   
 };
 
-const MeasurementForm = ({ onShowHistory, onBackToMain, showResults, setShowResults,onBackToForm }) => {
+const MeasurementForm = ({ onShowHistory, onBackToMain, showResults, setShowResults }) => {
   const [oldMeasurements, setOldMeasurements] = useState({
     weight: '',
     fat: '',

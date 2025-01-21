@@ -5,8 +5,6 @@ const WelcomePage = ({ onStart, onOpenCalculator }) => {
       <div className="start-box" onClick={onStart}>  {/* Step 1: Redirect to main app */}
         <h2>Register your weight & follow your progress</h2>
       </div>
-
-      {/* New Calculator Box */}
       <div className="calculator-box" onClick={onOpenCalculator}>
         <h2>Calculate your body fat percentage with fat calliper</h2>
       </div>

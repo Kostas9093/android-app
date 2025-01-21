@@ -8,7 +8,7 @@ const WelcomePage = ({ onStart, onOpenCalculator }) => {
 
       {/* New Calculator Box */}
       <div className="calculator-box" onClick={onOpenCalculator}>
-        <h2>Calculate Your Body Fat Percentage</h2>
+        <h2>Calculate Your Body Fat Percentage With Fat Calliper</h2>
       </div>
     </div>
   );

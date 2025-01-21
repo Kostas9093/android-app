@@ -1,22 +1,16 @@
-// src/components/BodyFatCalculatorApp.js
-import  { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-
-
-
-
 
 const BodyFatCalculatorApp = ({ onBack }) => {
     const [gender, setGender] = useState('');
     const [age, setAge] = useState('');
-    const [weight, setWeight] = useState('');
     const [measurements, setMeasurements] = useState({ chest: '', abdomen: '', thigh: '' });
     const [bodyFat, setBodyFat] = useState(null);
+    const [history, setHistory] = useState([]);
 
-    // Add prop-types validation
     BodyFatCalculatorApp.propTypes = {
-     onBack: PropTypes.func.isRequired,
-     };
+        onBack: PropTypes.func.isRequired,
+    };
 
     const handleMeasurementChange = (e) => {
         setMeasurements({
@@ -37,47 +31,62 @@ const BodyFatCalculatorApp = ({ onBack }) => {
             bodyFatPercentage = 'Please select a gender';
         }
 
-        setBodyFat(bodyFatPercentage ? bodyFatPercentage.toFixed(2) : null);
+        if (bodyFatPercentage && bodyFatPercentage !== 'Please select a gender') {
+            const roundedBodyFat = bodyFatPercentage.toFixed(2);
+            setBodyFat(roundedBodyFat);
+            saveToLocalStorage(roundedBodyFat);
+        } else {
+            setBodyFat(null);
+        }
+    };
+
+    const saveToLocalStorage = (result) => {
+        const timestamp = new Date().toISOString().split('T')[0];
+        const newEntry = { bodyFat: result, timestamp };
+
+        // Retrieve existing history or initialize an empty array
+        const existingHistory = JSON.parse(localStorage.getItem('bodyFatHistory')) || [];
+        const updatedHistory = [...existingHistory, newEntry];
+
+        // Save updated history to local storage
+        localStorage.setItem('bodyFatHistory', JSON.stringify(updatedHistory));
+    };
+
+    const showHistory = () => {
+        // Retrieve history from local storage
+        const savedHistory = JSON.parse(localStorage.getItem('bodyFatHistory')) || [];
+        setHistory(savedHistory);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         calculateBodyFat();
     };
-
+    const handleClearHistory = () => {
+        if (history.length > 0) {
+          const updatedHistory = history.slice(0, -1);
+          setHistory(updatedHistory);
+          localStorage.setItem('bodyFatHistory', JSON.stringify(updatedHistory));
+        }
+      };
     return (
         <div className="body-fat-calculator">
-            <h2>Body Fat Calculator</h2>
-
+            <h1>Body Fat Calliper Calculator</h1>
+        <br></br>
             <form onSubmit={handleSubmit}>
-
-         <div className="field">
-
-        <label id="Gen">Gender:</label>
-         <select value={gender} onChange={(e) => setGender(e.target.value)} required>
-         <option value="">Select</option>
-         <option value="male">Male</option>
-         <option value="female">Female</option>
-    </select>
-        </div>
-        
-<div className="field"></div>
                 
+                    <label>Gender:</label>
+                    <select className="field" value={gender} onChange={(e) => setGender(e.target.value)} required>
+                        <option value="">Select</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
                 
                 <label>Age: </label>
                 <input 
                     type="number" 
                     value={age} 
                     onChange={(e) => setAge(e.target.value)} 
-                    required 
-                />
-                <br />
-                
-                <label>Weight (kg): </label>
-                <input 
-                    type="number" 
-                    value={weight} 
-                    onChange={(e) => setWeight(e.target.value)} 
                     required 
                 />
                 <br />
@@ -112,16 +121,33 @@ const BodyFatCalculatorApp = ({ onBack }) => {
                 />
                 <br />
                 
-                <button id="caliper" type="submit">Calculate Body Fat Percentage</button>
+                <button id="caliper" type="submit">Calculate</button>
             </form>
-            
+            <br />
             {bodyFat && (
                 <div>
-                    <h2>Your Body Fat Percentage:</h2>
-                    <p>{bodyFat}%</p>
+                    <h2 id="resulth" >Your Body Fat Percentage:</h2>
+                    <p id="resultp">{bodyFat}%&nbsp;&nbsp; Body Fat</p>
                 </div>
             )}
-            <button onClick={onBack}>Back to Welcome</button>
+
+            <button onClick={showHistory}>Show History</button>
+            <br></br>
+            {history.length > 0 && (
+                <div id="caliperhistory">
+        {history.map((entry, index) => (
+            <div key={index} className="history-entry">
+                <p className="history-date">{entry.timestamp}&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <p className="history-bodyfat">{entry.bodyFat}% Body Fat</p>
+            </div>
+        ))}
+    </div>
+)}
+{history.length > 0 && (
+        <button id='clearh' onClick={handleClearHistory} >Clear Last Entry</button>
+      )}
+      <br/>
+            <button onClick={onBack}>Back</button>
         </div>
     );
 };

@@ -382,9 +382,19 @@ h2 {
   background-color: rgba(0, 0, 0, 0.8);
 
 }
+#caliperhistory{
+  display: flex;
+  text-align: center;
+  width: 100%;
+  color: rgb(255, 255, 255);
+  list-style: none;
+  font-size: small;
+  border: 1px solid limegreen;
+  padding: 2px;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.8);
+}
 
-
-/* Basic styling */
 .welcome {
   display: flex;
   font-size: 24px;
@@ -424,7 +434,7 @@ h2 {
 }
 
 .body-fat-calculator label {
-  width: 150px;
+  width: 160px;
   display: inline-block;
   justify-content: center;
   align-self: center;
@@ -436,59 +446,68 @@ h2 {
 .body-fat-calculator input {
   margin: 5px;
   height: 13px;
-  width: 130px;
+  width: 26%;
   justify-content: center;
   align-items: center;
   align-self: center;
-
-
 }
 
 .field {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
-  /* Space between fields */
-}
-
-.body-fat-calculator label#Gen {
-  display: block;
-  /* Forces the label to be on top */
-  text-align: left;
-  /* Aligns the label with the input */
-  margin-bottom: 5px;
-  /* Adds spacing below the label */
+  margin-bottom: 15px;
 }
 
 .body-fat-calculator button {
   margin: 10px auto;
-  /* Centers the buttons */
   display: block;
-  /* Ensures they stack properly */
 }
 
 .body-fat-calculator button:hover {
   background-color: #45a049;
 }
 
-.body-fat-calculator .field {
-  display: flex;
-  flex-direction: column;
-  /* Stack label and input vertically */
-  align-items: flex-start;
-  /* Align label and input to the left */
-  margin-bottom: 15px;
-  /* Add space between fields */
+.body-fat-calculator select {
+  width: 26%;
+  margin-left: 37%;
+  height: 20px;
+  margin-top: 5px;
+  text-align: center;
 }
 
-.body-fat-calculator select {
-  width: 33%;
-  /* Make the dropdown consistent in width */
-  margin-left: 20%;
-  height: 20px;
-  /* Ensure uniform height */
-  margin-top: 5px;
-  /* Add space below the label */
-  text-align: center;
-  /* Optional: center text in the dropdown */
+#resultp{
+  margin-left: 23%;
+  padding:2px 2px 2px 2px;
+  font-size: medium;
+}
+
+#resulth{
+  margin-right: 23%;
+  font-size: medium;
+}
+
+#caliperhistory {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 2px;
+  padding: 3px;
+  border: 2px solid green;
+  border-radius: 1px;
+  width:100%;
+
+}
+
+.history-entry {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+}
+
+.history-date {
+  font-weight: bold;
+}
+
+.history-bodyfat {
+  font-style: italic; 
 }

@@ -8,6 +8,7 @@
 .App {
   font-family: Arial, sans-serif;
   font-size: 10px;
+ 
 }
 
 body {
@@ -19,6 +20,13 @@ body {
 
 div {
   width: 390px;
+}
+
+#mform{
+  border: 1px solid limegreen;
+  border-radius: 8px;
+  margin: 5px;
+  padding: 15px ;
 }
 
 p {
@@ -424,7 +432,7 @@ h2 {
   max-width: 300px;
   margin: 20px auto;
   padding: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid limegreen;
   border-radius: 8px;
 }
 

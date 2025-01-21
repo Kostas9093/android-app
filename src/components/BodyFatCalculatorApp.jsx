@@ -146,8 +146,7 @@ const BodyFatCalculatorApp = ({ onBack }) => {
 {history.length > 0 && (
         <button id='clearh' onClick={handleClearHistory} >Clear Last Entry</button>
       )}
-      <br/>
-            <button onClick={onBack}>Back</button>
+        <button onClick={onBack}>Back</button>
         </div>
     );
 };

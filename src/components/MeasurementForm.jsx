@@ -129,7 +129,9 @@ MeasurementForm.propTypes = {
     }
   };
   return (
-    <div>
+    <div id="mform">
+      <h1>Weight Progress Tracker</h1>
+      <br/>
       {!showResults ? (
         <form onSubmit={handleSubmit}>
           <h2>Last Measurements</h2>

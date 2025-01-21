@@ -48,7 +48,6 @@ function App() {
         <BodyFatCalculatorApp onBack={handleBackToMain} /> // Render the calculator with a back button
       ) : (
         <>
-          <h1>Weight Progress Tracker</h1>
           <MeasurementForm 
             onShowHistory={handleShowHistory} 
             onBackToMain={handleBackToMain}

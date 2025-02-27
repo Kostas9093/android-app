@@ -517,3 +517,9 @@ h2 {
 .history-bodyfat {
   font-style: italic; 
 }
+
+.date {
+  color: rgb(85, 235, 85);
+   font-weight: bold; 
+  font-family: 'Arial', sans-serif;
+}

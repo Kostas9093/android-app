@@ -23,8 +23,8 @@ const HistoryPage = ({ onBack }) => {
       <ul>
         {history.map((entry, index) => (
           <li id='history' key={index}>
-            {entry.date} - Weight: {entry.measurements.weight}kg, Fat Mass: {entry.measurements.fat}%, Muscle Mass: {entry.measurements.muscle}%, Water: {entry.measurements.water}%
-          </li>
+             <span className="date">{entry.date}</span>  Weight: {entry.measurements.weight}kg, Fat Mass: {entry.measurements.fat}%, Muscle Mass: {entry.measurements.muscle}%, Water: {entry.measurements.water}%
+      </li>
         ))}
       </ul>
 

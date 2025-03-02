@@ -125,14 +125,20 @@ MeasurementForm.propTypes = {
   };
 
   const handleExit = () => {
-    if (window.confirm("DO YOU REALLY WANT TO CLOSE?")) {
-      document.addEventListener("visibilitychange", function () {
-        if (document.hidden) {
-          window.history.back();
-        }
-      });
+    if (window.confirm("Are you sure?")) {
+      if (window.ReactNativeWebView) {
+        // Send message to the native app (if WebView supports it)
+        window.ReactNativeWebView.postMessage("exitApp");
+      } else if (navigator.app && navigator.app.exitApp) {
+        // If Cordova/Capacitor is available, exit the app
+        navigator.app.exitApp();
+      } else {
+        // Try navigating back to exit the app (fallback)
+        window.history.back();
+      }
     }
   };
+  
   
 
   return (

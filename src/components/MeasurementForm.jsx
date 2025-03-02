@@ -124,10 +124,10 @@ MeasurementForm.propTypes = {
     localStorage.setItem('oldMeasurements', JSON.stringify(newMeasurements));
   };
   const handleExit = () => {
-    if (window.confirm("Are you sure you want to exit?")) {
-      window.close(); // This will attempt to close the browser tab
-    }
-  };
+  if (window.confirm("Are you sure you want to exit?")) {
+    window.ReactNativeWebView?.postMessage("exitApp");
+  }
+};
   return (
     <div id="mform">
       <h1>Weight Progress Tracker</h1>

@@ -28,7 +28,7 @@ const HistoryPage = ({ onBack }) => {
         ))}
       </ul>
 
-      <button id='back' onClick={onBack}>Back to Main</button>  {/* Back to main app */}
+      <button id='back' onClick={onBack}>Back</button>  {/* Back to main app */}
       {history.length > 0 && (
         <button id='clear' onClick={handleClearHistory}>Clear Last Entry</button>  /* Clear last history entry */
       )}

@@ -18,7 +18,11 @@ const BodyFatCalculatorApp = ({ onBack }) => {
             [e.target.name]: e.target.value
         });
     };
-
+    const handleExit = () => {
+        if (window.confirm("Are you sure you want to exit?")) {
+          window.close(); // This will attempt to close the browser tab
+        }
+      };
     const calculateBodyFat = () => {
         const sum = parseFloat(measurements.chest) + parseFloat(measurements.abdomen) + parseFloat(measurements.thigh);
 
@@ -119,8 +123,10 @@ const BodyFatCalculatorApp = ({ onBack }) => {
                     onChange={handleMeasurementChange} 
                     required 
                 />
+
                 <br />
-                
+
+                <button id="backCaliper" onClick={onBack}>Back</button>
                 <button id="caliper" type="submit">Calculate</button>
             </form>
             <br />
@@ -130,8 +136,8 @@ const BodyFatCalculatorApp = ({ onBack }) => {
                     <p id="resultp">{bodyFat}%&nbsp;&nbsp; Body Fat</p>
                 </div>
             )}
-
-            <button onClick={showHistory}>Show History</button>
+             <button id="exitCaliper" onClick={handleExit}>Exit</button>
+            <button id="CaliperHistory" onClick={showHistory}>Show History</button>
             <br></br>
             {history.length > 0 && (
                 <div id="caliperhistory">
@@ -143,10 +149,11 @@ const BodyFatCalculatorApp = ({ onBack }) => {
         ))}
     </div>
 )}
+
 {history.length > 0 && (
         <button id='clearh' onClick={handleClearHistory} >Clear Last Entry</button>
       )}
-        <button onClick={onBack}>Back</button>
+        
         </div>
     );
 };

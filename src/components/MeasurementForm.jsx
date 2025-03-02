@@ -123,11 +123,14 @@ MeasurementForm.propTypes = {
     localStorage.setItem('measurementHistory', JSON.stringify(updatedHistory));
     localStorage.setItem('oldMeasurements', JSON.stringify(newMeasurements));
   };
+
   const handleExit = () => {
     if (window.confirm("Are you sure you want to exit?")) {
-      window.close(); // This will attempt to close the browser tab
+      window.history.back(); // This will attempt to close the browser tab
     }
   };
+
+
   return (
     <div id="mform">
       <h1>Weight Progress Tracker</h1>
@@ -201,9 +204,9 @@ MeasurementForm.propTypes = {
         <ProgressDisplay progress={progress} onBackToMain={onBackToMain} />
         
       )}
-    
-      <button id="showHistory" onClick={onShowHistory}>Show History</button>
       <button id="exit" onClick={handleExit}>Exit</button>
+      <button id="showHistory" onClick={onShowHistory}>Show History</button>
+      
     </div>
   );
 };

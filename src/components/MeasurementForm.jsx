@@ -125,7 +125,7 @@ MeasurementForm.propTypes = {
   };
   const handleExit = () => {
   if (window.confirm("Are you sure you want to exit?")) {
-    window.ReactNativeWebView?.postMessage("exitApp");
+    window.location.href = "about:blank";
   }
 };
   return (

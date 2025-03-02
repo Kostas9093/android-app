@@ -125,10 +125,16 @@ MeasurementForm.propTypes = {
   };
 
   const handleExit = () => {
-    if (window.confirm("Are you sure you want to exit?")) {
-      window.close(); // This will attempt to close the browser tab
+    if (window.confirm("DO YOU REALLY WANT TO CLOSE?")) {
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) {
+          window.history.back();
+        }
+      });
     }
   };
+  
+
   return (
     <div id="mform">
       <h1>Weight Progress Tracker</h1>

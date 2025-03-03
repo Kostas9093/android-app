@@ -22,7 +22,7 @@ const ProgressDisplay = ({ progress, onBackToMain }) => {
       <p>{fatDiff > 0 ? `You gained ${Math.abs(fatDiff).toFixed(2)} % of Fat Mass` : fatDiff < 0 ? `You lost ${Math.abs(fatDiff).toFixed(2)}% of Fat Mass` : `${Math.abs(fatDiff).toFixed(2)}% of Fat Mass`} which is {fatKilosDiff > 0 ?  `${Math.abs(fatKilosDiff).toFixed(2)} kilos of Fat` :  `${Math.abs(fatKilosDiff).toFixed(2)} kilos of Fat`}</p>
       <p>{muscleDiff > 0 ? `You gained ${Math.abs(muscleDiff).toFixed(2)} % of Muscle Mass` : muscleDiff < 0 ? `You lost ${Math.abs(muscleDiff).toFixed(2)}% of Muscle Mass` : `${Math.abs(muscleDiff).toFixed(2)}% of Muscle Mass`} which is {musleKilosDiff > 0 ?  `${Math.abs(musleKilosDiff).toFixed(2)} kilos of Muscles` :  `${Math.abs(musleKilosDiff).toFixed(2)} kilos of Muscles`}</p>
       <p>{waterDiff > 0 ? `You gained ${Math.abs(waterDiff).toFixed(2)} % of Water` : waterDiff < 0 ? `You Lost ${Math.abs(waterDiff).toFixed(2)} % of Water` : `${Math.abs(waterDiff).toFixed(2)}`} which is {Math.abs(waterDiff / 100 * 100).toFixed(2)} kilos of Water</p>
-      <button id='back' onClick={onBackToMain}>Back to Main</button>
+      <button id='back' onClick={onBackToMain}>Back</button>
     </div>
   );
 };
@@ -125,17 +125,8 @@ MeasurementForm.propTypes = {
   };
 
   const handleExit = () => {
-    if (window.confirm("Are you sure?")) {
-      if (window.ReactNativeWebView) {
-        // Send message to the native app (if WebView supports it)
-        window.ReactNativeWebView.postMessage("exitApp");
-      } else if (navigator.app && navigator.app.exitApp) {
-        // If Cordova/Capacitor is available, exit the app
-        navigator.app.exitApp();
-      } else {
-        // Try navigating back to exit the app (fallback)
-        window.history.back();
-      }
+    if (window.confirm("Are you sure you want to exit?")) {
+      window.close(); // This will attempt to close the browser tab
     }
   };
   
@@ -206,9 +197,9 @@ MeasurementForm.propTypes = {
             value={newMeasurements.water}
             onChange={(e) => handleChange(e, false)}
           />
-
-          <button id="compare" type="submit">Compare</button>
           <button id="back" onClick={onBackToMain}>Back</button>
+          <button id="compare" type="submit">Compare</button>
+         
         </form>
       ) : (
         <ProgressDisplay progress={progress} onBackToMain={onBackToMain} />

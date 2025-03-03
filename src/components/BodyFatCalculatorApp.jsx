@@ -73,6 +73,14 @@ const BodyFatCalculatorApp = ({ onBack }) => {
           localStorage.setItem('bodyFatHistory', JSON.stringify(updatedHistory));
         }
       };
+
+      const calculateDaysBetween = (date1, date2) => {
+        const d1 = new Date(date1);
+        const d2 = new Date(date2);
+        const diffTime = Math.abs(d2 - d1);
+        return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      };
+    
     return (
         <div className="body-fat-calculator">
             <h1>Body Fat Calliper Calculator</h1>
@@ -139,9 +147,10 @@ const BodyFatCalculatorApp = ({ onBack }) => {
              <button id="exitCaliper" onClick={handleExit}>Exit</button>
             <button id="CaliperHistory" onClick={showHistory}>Show History</button>
             <br></br>
-            {history.length > 0 && (
+            {history.length > 0 && ( 
                 <div id="caliperhistory">
         {history.map((entry, index) => (
+            
             <div key={index} className="history-entry">
                 <p className="history-date">{entry.timestamp}&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 <p className="history-bodyfat">{entry.bodyFat}% Body Fat</p>

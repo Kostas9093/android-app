@@ -79,12 +79,15 @@ h2 {
   font-family: italic;
 }
 
+#Historyh2{
+margin-left: 20%;
+}
 
                                     /*          Buttons            */
 
 
 #compare {
-  margin-top: 30px;
+  margin-top: -36px;
   padding: 10px;
   width: 100px;
   margin-left: 70%;
@@ -319,7 +322,7 @@ h2 {
 
 
 #back {
-  margin-top: -35px;
+  margin-top: 30px;
   padding: 10px;
   width: 100px;
   margin-left: 3%;

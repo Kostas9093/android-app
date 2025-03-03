@@ -26,7 +26,7 @@ const HistoryPage = ({ onBack }) => {
   return (
     <div>
       <h1 id="Historyh2">Measurement History</h1>
-      <ul>
+      <ul id="historyul">
         {history.map((entry, index) => (
           <div key={index}>
             {index > 0 && (

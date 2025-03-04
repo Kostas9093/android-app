@@ -134,11 +134,10 @@ const BodyFatCalculatorApp = ({ onBack }) => {
             <br />
             {bodyFat && ( <div> <h2 id="resulth" >Your Body Fat Percentage:</h2> <p id="resultp">{bodyFat}%&nbsp;&nbsp; Body Fat</p> </div> )}
 
-            <button id="exitCaliper" onClick={handleExit}>Exit</button> <button id="CaliperHistory" onClick={showHistory}>Show History</button>
+            <button id="exitCaliper" onClick={handleExit}>Exit</button> <button id="CaliperHistoryB" onClick={showHistory}>Show History</button>
             <br></br>
             {history.length > 0 && ( 
-                <div id="caliperhistory">
-        {history.map((entry, index) => (
+                <div id="caliperhistory">{history.map((entry, index) => (
             
             <div key={index} className="history-entry">
                 <p className="history-date">{entry.timestamp}&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -148,11 +147,9 @@ const BodyFatCalculatorApp = ({ onBack }) => {
     </div>
 )}
 
-{history.length > 0 && (
-        <button id='clearh' onClick={handleClearHistory} >Clear Last Entry</button>
-      )}
+{history.length > 0 && ( <button id='clearh' onClick={handleClearHistory} >Clear Last Entry</button> )}
         
-        </div>
+     </div>
     );
 };
 

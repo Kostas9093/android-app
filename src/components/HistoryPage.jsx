@@ -26,14 +26,9 @@ const HistoryPage = ({ onBack }) => {
   return (
     <div>
       <h1 id="Historyh2">Measurement History</h1>
-      <ul id="historyul">
-        {history.map((entry, index) => (
-          <div key={index}>
-            {index > 0 && (
-              <h2>
-                {calculateDaysBetween(history[index - 1].date, entry.date)} days since last measurement
-              </h2>
-            )}
+      <ul id="historyul"> {history.map((entry, index) => (
+          <div key={index}> {index > 0 && (
+              <h2> {calculateDaysBetween(history[index - 1].date, entry.date)} days since last measurement </h2> )}
             <li id='history'>
               <span className="date">{entry.date}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Weight: {entry.measurements.weight}kg &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fat Mass: {entry.measurements.fat}% <br />
                &nbsp;Muscle Mass: {entry.measurements.muscle}% &nbsp;&nbsp;&nbsp;&nbsp; Water: {entry.measurements.water}%
@@ -43,9 +38,7 @@ const HistoryPage = ({ onBack }) => {
       </ul>
 
       <button id='back' onClick={onBack}>Back</button>
-      {history.length > 0 && (
-        <button id='clear' onClick={handleClearHistory}>Clear Last Entry</button>
-      )}
+      {history.length > 0 && ( <button id='clear' onClick={handleClearHistory}>Clear Last Entry</button> )}
     </div>
   );
 };

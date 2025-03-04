@@ -4,15 +4,7 @@ import PropTypes from 'prop-types';
 // Component to display progress results
 const ProgressDisplay = ({ progress, onBackToMain }) => {
   if (!progress) return null;
-
-  const {
-    weightDiff,
-    fatDiff,
-    muscleDiff,
-    waterDiff,
-    musleKilosDiff,
-    fatKilosDiff,
-  } = progress;
+ const { weightDiff, fatDiff,  muscleDiff, waterDiff, musleKilosDiff, fatKilosDiff, } = progress;
 
 
   return (
@@ -29,32 +21,14 @@ const ProgressDisplay = ({ progress, onBackToMain }) => {
 
 // Define prop types for the ProgressDisplay component
 ProgressDisplay.propTypes = {
-  progress: PropTypes.shape({
-    weightDiff: PropTypes.number,
-    fatDiff: PropTypes.number,
-    muscleDiff: PropTypes.number,
-    waterDiff: PropTypes.number,
-    musleKilosDiff: PropTypes.number,
-    fatKilosDiff: PropTypes.number,
-  }),
+  progress: PropTypes.shape({ weightDiff: PropTypes.number, fatDiff: PropTypes.number, muscleDiff: PropTypes.number,  waterDiff: PropTypes.number, musleKilosDiff: PropTypes.number, fatKilosDiff: PropTypes.number, }),
   onBackToMain: PropTypes.func.isRequired, // Back to main function prop
-  
-};
+  };
 
 const MeasurementForm = ({ onShowHistory, onBackToMain, showResults, setShowResults }) => {
-  const [oldMeasurements, setOldMeasurements] = useState({
-    weight: '',
-    fat: '',
-    muscle: '',
-    water: ''
-  });
+  const [oldMeasurements, setOldMeasurements] = useState({ weight: '', fat: '', muscle: '', water: ''});
 
-  const [newMeasurements, setNewMeasurements] = useState({
-    weight: '',
-    fat: '',
-    muscle: '',
-    water: ''
-  });
+  const [newMeasurements, setNewMeasurements] = useState({ weight: '', fat: '', muscle: '', water: ''});
 
   const [progress, setProgress] = useState(null);
   const [measurementHistory, setMeasurementHistory] = useState([]);
@@ -75,15 +49,9 @@ const MeasurementForm = ({ onShowHistory, onBackToMain, showResults, setShowResu
   const handleChange = (e, isOld = true) => {
     const { name, value } = e.target;
     if (isOld) {
-      setOldMeasurements(prevState => ({
-        ...prevState,
-        [name]: value
-      }));
+      setOldMeasurements(prevState => ({ ...prevState, [name]: value }));
     } else {
-      setNewMeasurements(prevState => ({
-        ...prevState,
-        [name]: value
-      }));
+      setNewMeasurements(prevState => ({ ...prevState, [name]: value }));
     }
   };
 // PropTypes validation for MeasurementForm component
@@ -102,21 +70,15 @@ MeasurementForm.propTypes = {
     const newMuscleKilos = (newMeasurements.weight * newMeasurements.muscle) / 100;
 
     const progress = {
-      weightDiff: newMeasurements.weight - oldMeasurements.weight,
-      fatDiff: newMeasurements.fat - oldMeasurements.fat,
-      muscleDiff: newMeasurements.muscle - oldMeasurements.muscle,
-      waterDiff: newMeasurements.water - oldMeasurements.water,
-      fatKilosDiff: newFatKilos - oldFatKilos,
-      musleKilosDiff: newMuscleKilos - oldMuscleKilos
-    };
+      weightDiff: newMeasurements.weight - oldMeasurements.weight, fatDiff: newMeasurements.fat - oldMeasurements.fat,
+      muscleDiff: newMeasurements.muscle - oldMeasurements.muscle, waterDiff: newMeasurements.water - oldMeasurements.water,
+      fatKilosDiff: newFatKilos - oldFatKilos, musleKilosDiff: newMuscleKilos - oldMuscleKilos };
 
     setProgress(progress);
     setShowResults(true);  // Show results and hide the form
 
     const newHistoryEntry = {
-      date: new Date().toISOString().split('T')[0],
-      measurements: newMeasurements
-    };
+      date: new Date().toISOString().split('T')[0], measurements: newMeasurements};
 
     const updatedHistory = [...measurementHistory, newHistoryEntry];
     setMeasurementHistory(updatedHistory);
@@ -139,72 +101,22 @@ MeasurementForm.propTypes = {
       {!showResults ? (
         <form onSubmit={handleSubmit}>
           <h2>Last Measurements</h2>
-          <input
-            type="number"
-            placeholder="Previous Weight Kg"
-            name="weight"
-            value={oldMeasurements.weight}
-            onChange={(e) => handleChange(e, true)}
-          />
-          <input
-            type="number"
-            placeholder="Previous Fat Mass %"
-            name="fat"
-            value={oldMeasurements.fat}
-            onChange={(e) => handleChange(e, true)}
-          />
-          <input
-            type="number"
-            placeholder="Previous Muscle Mass %"
-            name="muscle"
-            value={oldMeasurements.muscle}
-            onChange={(e) => handleChange(e, true)}
-          />
-          <input
-            type="number"
-            placeholder="Previous Water %"
-            name="water"
-            value={oldMeasurements.water}
-            onChange={(e) => handleChange(e, true)}
-          />
+          <input type="number" placeholder="Previous Weight Kg" name="weight" value={oldMeasurements.weight} onChange={(e) => handleChange(e, true)}/>
+          <input type="number" placeholder="Previous Fat Mass %" name="fat" value={oldMeasurements.fat} onChange={(e) => handleChange(e, true)} />
+          <input type="number" placeholder="Previous Muscle Mass %" name="muscle" value={oldMeasurements.muscle} onChange={(e) => handleChange(e, true)} />
+          <input type="number" placeholder="Previous Water %" name="water" value={oldMeasurements.water} onChange={(e) => handleChange(e, true)} />
 
           <h2>Current Measurements</h2>
-          <input
-            type="number"
-            placeholder="Current Weight Kg"
-            name="weight"
-            value={newMeasurements.weight}
-            onChange={(e) => handleChange(e, false)}
-          />
-          <input
-            type="number"
-            placeholder="Current Fat Mass %"
-            name="fat"
-            value={newMeasurements.fat}
-            onChange={(e) => handleChange(e, false)}
-          />
-          <input
-            type="number"
-            placeholder="Current Muscle Mass %"
-            name="muscle"
-            value={newMeasurements.muscle}
-            onChange={(e) => handleChange(e, false)}
-          />
-          <input
-            type="number"
-            placeholder="Current Water %"
-            name="water"
-            value={newMeasurements.water}
-            onChange={(e) => handleChange(e, false)}
-          />
+          <input type="number" placeholder="Current Weight Kg" name="weight" value={newMeasurements.weight} onChange={(e) => handleChange(e, false)} />
+          <input type="number" placeholder="Current Fat Mass %" name="fat" value={newMeasurements.fat} onChange={(e) => handleChange(e, false)} />
+          <input type="number" placeholder="Current Muscle Mass %" name="muscle" value={newMeasurements.muscle} onChange={(e) => handleChange(e, false)} />
+          <input type="number"  placeholder="Current Water %" name="water" value={newMeasurements.water} onChange={(e) => handleChange(e, false)} />
           <button id="back" onClick={onBackToMain}>Back</button>
           <button id="compare" type="submit">Compare</button>
          
         </form>
-      ) : (
-        <ProgressDisplay progress={progress} onBackToMain={onBackToMain} />
-        
-      )}
+      ) : ( <ProgressDisplay progress={progress} onBackToMain={onBackToMain} /> )}
+
       <button id="exit" onClick={handleExit}>Exit</button>
       <button id="showHistory" onClick={onShowHistory}>Show History</button>
       

@@ -407,9 +407,6 @@ margin-left: 4%;
   margin-left: 0%;
 }
 
-#CaliperHistory{
-  margin-left: 26%;
-}
 #CaliperHistoryB{
 margin-left: 24%;
 }
@@ -418,6 +415,10 @@ margin-left: 24%;
   margin-left: 0;
   margin-top: 20px;
   display: inline-block;
+}
+
+#clearh{
+margin-left: 35%;
 }
 /* .body-fat-calculator button:hover {
   background-color: #45a049;
@@ -444,18 +445,7 @@ margin-left: 24%;
   background-color: rgba(0, 0, 0, 0.8);
 
 }
-#caliperhistory{
-  display: flex;
-  text-align: center;
-  width: 100%;
-  color: rgb(255, 255, 255);
-  list-style: none;
-  font-size: small;
-  border: 1px solid limegreen;
-  padding: 2px;
-  border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.8);
-}
+
 
 .welcome {
   display: flex;
@@ -491,9 +481,6 @@ margin-left: 24%;
   border-radius: 8px;
 }
 
-.body-fat-calculator h2 {
-  text-align: center;
-}
 
 .body-fat-calculator label {
   width: 160px;
@@ -534,27 +521,44 @@ margin-left: 24%;
   font-size: medium;
 }
 
+#caliperh2{
+  margin-left: -20%;
+}
+
 #resulth{
   margin-right: 23%;
   font-size: medium;
 }
 
+
+#caliperhistory{
+  margin-left: -2%;
+}
 #caliperhistory {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  width: 100%;
+  text-align: center;
   margin-top: 2px;
   padding: 3px;
-  border: 2px solid green;
+  /* border: 2px solid limegreen; */
   border-radius: 1px;
   width:100%;
+  list-style: none;
+  font-size: small;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: rgb(255, 255, 255);
 
 }
 
-.history-entry {
-  display: flex;
-  flex-direction: row;
-  padding: 5px;
+#caliperli{
+  margin-top: 2%;
+  margin-left: -20%;
+  margin-bottom: 2%;
+  margin-left: 5%;
+  border: 2px solid green;
+  width:60%;
+  padding:3%;
 }
 
 .history-date {

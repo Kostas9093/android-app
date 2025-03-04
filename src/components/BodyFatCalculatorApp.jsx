@@ -73,6 +73,12 @@ const BodyFatCalculatorApp = ({ onBack }) => {
           localStorage.setItem('bodyFatHistory', JSON.stringify(updatedHistory));
         }
       };
+      const calculateDaysBetween = (date1, date2) => {
+        const d1 = new Date(date1);
+        const d2 = new Date(date2);
+        const diffTime = Math.abs(d2 - d1);
+        return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      };
 
     return (
         <div className="body-fat-calculator">
@@ -82,73 +88,44 @@ const BodyFatCalculatorApp = ({ onBack }) => {
                 
                     <label>Gender:</label>
                     <select className="field" value={gender} onChange={(e) => setGender(e.target.value)} required>
-                        <option value="">Select</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                        <option value="">Select</option> <option value="male">Male</option> <option value="female">Female</option>
                     </select>
                 
                 <label>Age: </label>
-                <input 
-                    type="number" 
-                    value={age} 
-                    onChange={(e) => setAge(e.target.value)} 
-                    required 
-                />
-                <br />
-                
+                <input  type="number" value={age} onChange={(e) => setAge(e.target.value)} required  /> <br />
+     
                 <label>Chest Skinfold (mm): </label>
-                <input 
-                    type="number" 
-                    name="chest" 
-                    value={measurements.chest} 
-                    onChange={handleMeasurementChange} 
-                    required 
-                />
-                <br />
+                <input type="number" name="chest" value={measurements.chest} onChange={handleMeasurementChange} required /> <br />
                 
                 <label>Abdomen Skinfold (mm): </label>
-                <input 
-                    type="number" 
-                    name="abdomen" 
-                    value={measurements.abdomen} 
-                    onChange={handleMeasurementChange} 
-                    required 
-                />
-                <br />
+                <input type="number" name="abdomen" value={measurements.abdomen} onChange={handleMeasurementChange} required /> <br />
                 
                 <label>Thigh Skinfold (mm): </label>
-                <input 
-                    type="number" 
-                    name="thigh" 
-                    value={measurements.thigh} 
-                    onChange={handleMeasurementChange} 
-                    required 
-                />
-
-                <br />
+                <input type="number" name="thigh" value={measurements.thigh} onChange={handleMeasurementChange} required /> <br />
 
                 <button id="backCaliper" onClick={onBack}>Back</button>
                 <button id="caliper" type="submit">Calculate</button>
-            </form>
+            </form> <br />
 
-            <br />
             {bodyFat && ( <div> <h2 id="resulth" >Your Body Fat Percentage:</h2> <p id="resultp">{bodyFat}%&nbsp;&nbsp; Body Fat</p> </div> )}
 
             <button id="exitCaliper" onClick={handleExit}>Exit</button> <button id="CaliperHistoryB" onClick={showHistory}>Show History</button>
             <br></br>
-            {history.length > 0 && ( 
-                <div id="caliperhistory">{history.map((entry, index) => (
             
-            <div key={index} className="history-entry">
-                <p className="history-date">{entry.timestamp}&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                <p className="history-bodyfat">{entry.bodyFat}% Body Fat</p>
-            </div>
+            {history.length > 0 && ( 
+                <div id="caliperhistory">
+               {history.map((entry, index) => (
+                <div key={index} > {index > 0 && (
+                <h2 id="caliperh2"> {calculateDaysBetween(history[index - 1].date, entry.date)} days since last measurement </h2>
+                 )} 
+                <li id="caliperli"> <span className="date">{entry.timestamp}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>{entry.bodyFat}% Body Fat</span></li>
+                </div>
         ))}
     </div>
 )}
-
 {history.length > 0 && ( <button id='clearh' onClick={handleClearHistory} >Clear Last Entry</button> )}
-        
+
      </div>
     );
 };

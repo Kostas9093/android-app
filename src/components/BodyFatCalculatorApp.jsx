@@ -130,15 +130,11 @@ const BodyFatCalculatorApp = ({ onBack }) => {
                 <button id="backCaliper" onClick={onBack}>Back</button>
                 <button id="caliper" type="submit">Calculate</button>
             </form>
+
             <br />
-            {bodyFat && (
-                <div>
-                    <h2 id="resulth" >Your Body Fat Percentage:</h2>
-                    <p id="resultp">{bodyFat}%&nbsp;&nbsp; Body Fat</p>
-                </div>
-            )}
-             <button id="exitCaliper" onClick={handleExit}>Exit</button>
-            <button id="CaliperHistory" onClick={showHistory}>Show History</button>
+            {bodyFat && ( <div> <h2 id="resulth" >Your Body Fat Percentage:</h2> <p id="resultp">{bodyFat}%&nbsp;&nbsp; Body Fat</p> </div> )}
+
+            <button id="exitCaliper" onClick={handleExit}>Exit</button> <button id="CaliperHistory" onClick={showHistory}>Show History</button>
             <br></br>
             {history.length > 0 && ( 
                 <div id="caliperhistory">

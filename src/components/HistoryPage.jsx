@@ -35,7 +35,8 @@ const HistoryPage = ({ onBack }) => {
               </h2>
             )}
             <li id='history'>
-              <span className="date">{entry.date}</span> Weight: {entry.measurements.weight}kg, Fat Mass: {entry.measurements.fat}%, Muscle Mass: {entry.measurements.muscle}%, Water: {entry.measurements.water}%
+              <span className="date">{entry.date}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Weight: {entry.measurements.weight}kg &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fat Mass: {entry.measurements.fat}% <br />
+               &nbsp;Muscle Mass: {entry.measurements.muscle}% &nbsp;&nbsp;&nbsp;&nbsp; Water: {entry.measurements.water}%
             </li>
           </div>
         ))}

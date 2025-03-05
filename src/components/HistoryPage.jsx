@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+
 
 const HistoryPage = ({ onBack }) => {
   const [history, setHistory] = useState([]);
+
+  HistoryPage.propTypes= { onBack: PropTypes.func.isRequired}
 
   useEffect(() => {
     const savedHistory = JSON.parse(localStorage.getItem('measurementHistory')) || [];

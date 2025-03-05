@@ -64,15 +64,16 @@ MeasurementForm.propTypes = {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const oldFatKilos = (oldMeasurements.weight * oldMeasurements.fat) / 100;
-    const newFatKilos = (newMeasurements.weight * newMeasurements.fat) / 100;
-    const oldMuscleKilos = (oldMeasurements.weight * oldMeasurements.muscle) / 100;
-    const newMuscleKilos = (newMeasurements.weight * newMeasurements.muscle) / 100;
+            // fat in kilos //
+    // const oldFatKilos = (oldMeasurements.weight * oldMeasurements.fat) / 100;
+    // const newFatKilos = (newMeasurements.weight * newMeasurements.fat) / 100;
+    // const oldMuscleKilos = (oldMeasurements.weight * oldMeasurements.muscle) / 100;
+    // const newMuscleKilos = (newMeasurements.weight * newMeasurements.muscle) / 100;
 
-    const progress = {
-      weightDiff: newMeasurements.weight - oldMeasurements.weight, fatDiff: newMeasurements.fat - oldMeasurements.fat,
-      muscleDiff: newMeasurements.muscle - oldMeasurements.muscle, waterDiff: newMeasurements.water - oldMeasurements.water,
-      fatKilosDiff: newFatKilos - oldFatKilos, musleKilosDiff: newMuscleKilos - oldMuscleKilos };
+    // const progress = {
+    //   weightDiff: newMeasurements.weight - oldMeasurements.weight, fatDiff: newMeasurements.fat - oldMeasurements.fat,
+    //   muscleDiff: newMeasurements.muscle - oldMeasurements.muscle, waterDiff: newMeasurements.water - oldMeasurements.water,
+    //   fatKilosDiff: newFatKilos - oldFatKilos, musleKilosDiff: newMuscleKilos - oldMuscleKilos };
 
     setProgress(progress);
     setShowResults(true);  // Show results and hide the form

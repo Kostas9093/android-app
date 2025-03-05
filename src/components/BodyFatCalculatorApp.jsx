@@ -116,7 +116,7 @@ const BodyFatCalculatorApp = ({ onBack }) => {
                 <div id="caliperhistory">
                {history.map((entry, index) => (
                 <div key={index} > {index > 0 && (
-                <h2 id="caliperh2"> {calculateDaysBetween(history[index - 1].date, entry.date)} days since last measurement </h2>
+                <h2 id="caliperh2"> {calculateDaysBetween(history[index - 1].timestamp, entry.timestamp)} days since last measurement </h2>
                  )} 
                 <li id="caliperli"> <span className="date">{entry.timestamp}&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <span>{entry.bodyFat}% Body Fat</span></li>

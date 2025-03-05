@@ -1,4 +1,11 @@
+import PropTypes from 'prop-types';
+
 const WelcomePage = ({ onStart, onOpenCalculator }) => {
+
+ WelcomePage.propTypes = {
+        onStart: PropTypes.func.isRequired, onOpenCalculator: PropTypes.func.isRequierd
+    };
+
   return (
     <div className="welcome">
       <h1>Weight Progress Tracker</h1>

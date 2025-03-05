@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-const BodyFatCalculatorApp = ({ onBack }) => {
+const BodyFatCalculatorApp = ({ showFatHistory , onBack }) => {
     const [gender, setGender] = useState('');
     const [age, setAge] = useState('');
     const [measurements, setMeasurements] = useState({ chest: '', abdomen: '', thigh: '' });
@@ -9,7 +9,7 @@ const BodyFatCalculatorApp = ({ onBack }) => {
     const [history, setHistory] = useState([]);
 
     BodyFatCalculatorApp.propTypes = {
-        onBack: PropTypes.func.isRequired,
+        onBack: PropTypes.func.isRequired,showFatHistory: PropTypes.func.isRequired, // Adding prop validation for showFatHistory
     };
 
     const handleMeasurementChange = (e) => {
@@ -54,12 +54,6 @@ const BodyFatCalculatorApp = ({ onBack }) => {
 
         // Save updated history to local storage
         localStorage.setItem('bodyFatHistory', JSON.stringify(updatedHistory));
-    };
-
-    const showHistory = () => {
-        // Retrieve history from local storage
-        const savedHistory = JSON.parse(localStorage.getItem('bodyFatHistory')) || [];
-        setHistory(savedHistory);
     };
 
     const handleSubmit = (e) => {
@@ -109,7 +103,7 @@ const BodyFatCalculatorApp = ({ onBack }) => {
 
             {bodyFat && ( <div> <h2 id="resulth" >Your Body Fat Percentage:</h2> <p id="resultp">{bodyFat}%&nbsp;&nbsp; Body Fat</p> </div> )}
 
-            <button id="exitCaliper" onClick={handleExit}>Exit</button> <button id="CaliperHistoryB" onClick={showHistory}>Show History</button>
+            <button id="exitCaliper" onClick={handleExit}>Exit</button> <button id="CaliperHistoryB" onClick={showFatHistory}>Show History</button>
             <br></br>
             
             {history.length > 0 && ( 

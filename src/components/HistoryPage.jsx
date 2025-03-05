@@ -40,28 +40,28 @@ const HistoryPage = ({ onBack }) => {
     {
       label: 'Weight (kg)',
       data: history.map((entry) => entry.measurements.weight),
-      borderColor: 'rgb(75, 192, 192)',
+      borderColor: 'rgb(25, 54, 216)',
       backgroundColor: 'rgba(75, 192, 192, 0.2)',
       fill: false,
     },
     {
       label: 'Fat Mass (%)',
       data: history.map((entry) => entry.measurements.fat),
-      borderColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(228, 160, 15)',
       backgroundColor: 'rgba(255, 99, 132, 0.2)',
       fill: false,
     },
     {
       label: 'Muscle Mass (%)',
       data: history.map((entry) => entry.measurements.muscle),
-      borderColor: 'rgb(54, 162, 235)',
+      borderColor: 'rgb(235, 90, 54)',
       backgroundColor: 'rgba(54, 162, 235, 0.2)',
       fill: false,
     },
     {
       label: 'Water (%)',
       data: history.map((entry) => entry.measurements.water),
-      borderColor: 'rgb(153, 102, 255)',
+      borderColor: 'rgb(102, 250, 255)',
       backgroundColor: 'rgba(153, 102, 255, 0.2)',
       fill: false,
     }

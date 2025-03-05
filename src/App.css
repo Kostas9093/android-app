@@ -553,10 +553,12 @@ margin-left: 35%;
 
 #caliperli{
   margin-top: 2%;
-  margin-left: -20%;
   margin-bottom: 2%;
-  margin-left: 5%;
+  margin-left: 18%;
+  text-align: center;
   border: 2px solid green;
+  color:white;
+  list-style: none;
   width:60%;
   padding:3%;
 }

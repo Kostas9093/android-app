@@ -83,6 +83,17 @@ h2 {
 margin-left: 4%;
 }
 
+#chooseFile{
+  width: 250px;
+  height: 50px;
+  display: inline-block;
+  justify-content: center;
+  align-self: center;
+  font-size: large;
+  color: white;
+
+}
+
                                     /*          Buttons            */
 
 
@@ -289,8 +300,8 @@ margin-left: 4%;
   inherits: false;
 }
 
-#exit::after,
-#exit::before {
+#exit::after,#backPhoto::after,.ClearPhoto::after,
+#exit::before,#backPhoto::before,.ClearPhoto::before {
   content: '';
   position: absolute;
   height: 100%;
@@ -305,7 +316,7 @@ margin-left: 4%;
   animation: 3s spin linear infinite;
 }
 
-#exit::before {
+#exit::before,#backPhoto::before,.ClearPhoto::before {
   filter: blur(1.5rem);
   opacity: 0.5;
 }
@@ -321,7 +332,7 @@ margin-left: 4%;
 }
 
 
-#back {
+#back ,#backPhoto{
   margin-top: 30px;
   padding: 10px;
   width: 100px;
@@ -349,7 +360,7 @@ margin-left: 4%;
   display: inline-block;
 }
 
-#back,
+#back,#backPhoto,
 .body-fat-calculator button {
   background: #1c1f2b;
   text-align: center;
@@ -420,6 +431,21 @@ margin-left: 25%;
 #clearh{
 margin-left: 35%;
 }
+
+.ClearPhoto{
+  top: -50px;
+  padding: 10px;
+  width: 100px;
+  margin-left: 70%;
+  background-color: #1c1f2b;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10%;
+  position: relative;
+  display: inline-block; 
+}
+
 /* .body-fat-calculator button:hover {
   background-color: #45a049;
 } */
@@ -461,7 +487,7 @@ margin-left: 35%;
 .start-box,
 .calculator-box {
   background-color: rgb(85, 100, 131);
-  margin-top: 50px;
+  margin-top: 20px;
   width: 320px;
   color: rgb(39, 36, 36);
   font-size: 20px;
@@ -577,3 +603,23 @@ margin-left: 35%;
   font-family: 'Arial', sans-serif;
 }
 
+.photosize{
+  width:60%;
+  height:60%;
+  margin-left: 5%;
+}
+.Photodates{
+  margin-left: 25%;
+  margin-top: 2%;
+  font-size: large;
+}
+.Photoh1{
+margin-left: -22%;
+font-size: 300%;
+}
+.PhotoDiff{
+  margin-left: 10%;
+  margin-top: 2%;
+  font-size: large; 
+  color:limegreen
+}

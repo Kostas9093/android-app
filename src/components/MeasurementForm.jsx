@@ -6,7 +6,12 @@ const ProgressDisplay = ({ progress, onBackToMain }) => {
   if (!progress) return null;
  const { weightDiff, fatDiff,  muscleDiff, waterDiff, musleKilosDiff, fatKilosDiff, } = progress;
 
-
+// Define prop types for the ProgressDisplay component
+ProgressDisplay.propTypes = {
+  progress: PropTypes.shape({ weightDiff: PropTypes.number, fatDiff: PropTypes.number, muscleDiff: PropTypes.number,  waterDiff: PropTypes.number, musleKilosDiff: PropTypes.number, fatKilosDiff: PropTypes.number, }),
+  onBackToMain: PropTypes.func.isRequired, // Back to main function prop
+  };
+  
   return (
     <div className="new">
       <h2>Progress Results</h2>
@@ -19,11 +24,7 @@ const ProgressDisplay = ({ progress, onBackToMain }) => {
   );
 };
 
-// Define prop types for the ProgressDisplay component
-ProgressDisplay.propTypes = {
-  progress: PropTypes.shape({ weightDiff: PropTypes.number, fatDiff: PropTypes.number, muscleDiff: PropTypes.number,  waterDiff: PropTypes.number, musleKilosDiff: PropTypes.number, fatKilosDiff: PropTypes.number, }),
-  onBackToMain: PropTypes.func.isRequired, // Back to main function prop
-  };
+
 
 const MeasurementForm = ({ onShowHistory, onBackToMain, showResults, setShowResults }) => {
   const [oldMeasurements, setOldMeasurements] = useState({ weight: '', fat: '', muscle: '', water: ''});

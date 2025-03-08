@@ -98,7 +98,7 @@ const BodyFatCalculatorApp = ({ showFatHistory , onBack }) => {
                 <input type="number" name="thigh" value={measurements.thigh} onChange={handleMeasurementChange} required /> <br />
 
                 <button id="backCaliper" onClick={onBack}>Back</button>
-                <button id="caliper" type="submit">Calculate</button>
+                <button id="caliper" type="submit">Submit</button>
             </form> <br />
 
             {bodyFat && ( <div> <h2 id="resulth" >Your Body Fat Percentage:</h2> <p id="resultp">{bodyFat}%&nbsp;&nbsp; Body Fat</p> </div> )}

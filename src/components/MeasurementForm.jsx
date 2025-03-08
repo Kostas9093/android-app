@@ -65,15 +65,15 @@ MeasurementForm.propTypes = {
     e.preventDefault();
 
             // fat in kilos //
-    // const oldFatKilos = (oldMeasurements.weight * oldMeasurements.fat) / 100;
-    // const newFatKilos = (newMeasurements.weight * newMeasurements.fat) / 100;
-    // const oldMuscleKilos = (oldMeasurements.weight * oldMeasurements.muscle) / 100;
-    // const newMuscleKilos = (newMeasurements.weight * newMeasurements.muscle) / 100;
+    const oldFatKilos = (oldMeasurements.weight * oldMeasurements.fat) / 100;
+    const newFatKilos = (newMeasurements.weight * newMeasurements.fat) / 100;
+    const oldMuscleKilos = (oldMeasurements.weight * oldMeasurements.muscle) / 100;
+    const newMuscleKilos = (newMeasurements.weight * newMeasurements.muscle) / 100;
 
-    // const progress = {
-    //   weightDiff: newMeasurements.weight - oldMeasurements.weight, fatDiff: newMeasurements.fat - oldMeasurements.fat,
-    //   muscleDiff: newMeasurements.muscle - oldMeasurements.muscle, waterDiff: newMeasurements.water - oldMeasurements.water,
-    //   fatKilosDiff: newFatKilos - oldFatKilos, musleKilosDiff: newMuscleKilos - oldMuscleKilos };
+    const progress = {
+      weightDiff: newMeasurements.weight - oldMeasurements.weight, fatDiff: newMeasurements.fat - oldMeasurements.fat,
+      muscleDiff: newMeasurements.muscle - oldMeasurements.muscle, waterDiff: newMeasurements.water - oldMeasurements.water,
+      fatKilosDiff: newFatKilos - oldFatKilos, musleKilosDiff: newMuscleKilos - oldMuscleKilos };
 
     setProgress(progress);
     setShowResults(true);  // Show results and hide the form
@@ -113,7 +113,7 @@ MeasurementForm.propTypes = {
           <input type="number" placeholder="Current Muscle Mass %" name="muscle" value={newMeasurements.muscle} onChange={(e) => handleChange(e, false)} />
           <input type="number"  placeholder="Current Water %" name="water" value={newMeasurements.water} onChange={(e) => handleChange(e, false)} />
           <button id="back" onClick={onBackToMain}>Back</button>
-          <button id="compare" type="submit">Compare</button>
+          <button id="compare" type="submit">Submit</button>
          
         </form>
       ) : ( <ProgressDisplay progress={progress} onBackToMain={onBackToMain} /> )}

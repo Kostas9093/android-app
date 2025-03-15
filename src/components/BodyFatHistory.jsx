@@ -32,6 +32,22 @@ const BodyFatHistory = ({ onBack }) => {
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   };
 
+  const handleSendEmail = () => {
+    const email = prompt('Enter your email:');
+    if (!email) return;
+
+    // Format the history data
+    const emailBody = history
+      .map(entry => 
+        `Date: ${entry.date}\nWeight: ${entry.measurements.weight}kg\nFat Mass: ${entry.measurements.fat}%\nMuscle Mass: ${entry.measurements.muscle}%\nWater: ${entry.measurements.water}%\n\n`
+      )
+      .join('');
+
+    // Open email client with pre-filled email
+    const mailtoLink = `mailto:${email}?subject=Measurement History&body=${encodeURIComponent(emailBody)}`;
+    window.location.href = mailtoLink;
+  };
+
  // Prepare data for the graph
  const chartData = {
     labels: history.map((entry) => entry.timestamp), // Labels based on the dates
@@ -63,6 +79,7 @@ const BodyFatHistory = ({ onBack }) => {
 
       <button id='back' onClick={onBack}>Back</button>
       {history.length > 0 && ( <button id='clear' onClick={handleClearHistory}>Clear Last Entry</button> )}
+      {history.length > 0 &&(<button id='email' onClick={handleSendEmail}>Email History</button>)}
     </div>
   );
 };

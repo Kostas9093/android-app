@@ -65,16 +65,33 @@ MeasurementForm.propTypes = {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-            // fat in kilos //
-    const oldFatKilos = (oldMeasurements.weight * oldMeasurements.fat) / 100;
-    const newFatKilos = (newMeasurements.weight * newMeasurements.fat) / 100;
-    const oldMuscleKilos = (oldMeasurements.weight * oldMeasurements.muscle) / 100;
-    const newMuscleKilos = (newMeasurements.weight * newMeasurements.muscle) / 100;
 
-    const progress = {
-      weightDiff: newMeasurements.weight - oldMeasurements.weight, fatDiff: newMeasurements.fat - oldMeasurements.fat,
-      muscleDiff: newMeasurements.muscle - oldMeasurements.muscle, waterDiff: newMeasurements.water - oldMeasurements.water,
-      fatKilosDiff: newFatKilos - oldFatKilos, musleKilosDiff: newMuscleKilos - oldMuscleKilos };
+      // Convert string inputs to numbers
+    const oldWeight = parseFloat(oldMeasurements.weight);
+    const newWeight = parseFloat(newMeasurements.weight);
+    const oldFat = parseFloat(oldMeasurements.fat);
+    const newFat = parseFloat(newMeasurements.fat);
+    const oldMuscle = parseFloat(oldMeasurements.muscle);
+    const newMuscle = parseFloat(newMeasurements.muscle);
+    const oldWater = parseFloat(oldMeasurements.water);
+    const newWater = parseFloat(newMeasurements.water);
+    
+           
+     // Fat and Muscle in kilos
+  const oldFatKilos = (oldWeight * oldFat) / 100;
+  const newFatKilos = (newWeight * newFat) / 100;
+
+  const oldMuscleKilos = (oldWeight * oldMuscle) / 100;
+  const newMuscleKilos = (newWeight * newMuscle) / 100;
+
+   const progress = {
+    weightDiff: newWeight - oldWeight,
+    fatDiff: newFat - oldFat,
+    muscleDiff: newMuscle - oldMuscle,
+    waterDiff: newWater - oldWater,
+    fatKilosDiff: newFatKilos - oldFatKilos,
+    musleKilosDiff: newMuscleKilos - oldMuscleKilos
+  };
 
     setProgress(progress);
     setShowResults(true);  // Show results and hide the form

@@ -100,8 +100,8 @@ const HistoryPage = ({ onBack }) => {
           <div key={index}> {index > 0 && (
               <h2> {calculateDaysBetween(history[index - 1].date, entry.date)} days between last measurement </h2> )}
             <li id='history'>
-              <span className="date">{entry.date}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Weight: {entry.measurements.weight}kg &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fat Mass: {entry.measurements.fat}% <br />
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Muscle Mass: {entry.measurements.muscle}% ({calculateMuscleKg(entry.measurements.weight, entry.measurements.muscle)} kg)&nbsp;&nbsp;&nbsp;&nbsp; Water: {entry.measurements.water}%
+              <span className="date">{entry.date}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Weight: {entry.measurements.weight}kg &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fat Mass: {entry.measurements.fat}% <br />
+              &nbsp;&nbsp;&nbsp;&nbsp; Muscle Mass: {entry.measurements.muscle}% ({calculateMuscleKg(entry.measurements.weight, entry.measurements.muscle)} kg)&nbsp;&nbsp;&nbsp;&nbsp; Water: {entry.measurements.water}%
             </li>
           </div>
         ))}

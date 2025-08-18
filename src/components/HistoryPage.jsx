@@ -32,6 +32,12 @@ const HistoryPage = ({ onBack }) => {
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   };
 
+  const calculateMuscleKg = (weight, musclePercentage) => {
+  if (!weight || !musclePercentage) return null;
+  return ((musclePercentage / 100) * weight).toFixed(2); // keep 2 decimals
+};
+
+
   const handleSendEmail = () => {
     const email = prompt('Enter your email:');
     if (!email) return;
@@ -94,8 +100,8 @@ const HistoryPage = ({ onBack }) => {
           <div key={index}> {index > 0 && (
               <h2> {calculateDaysBetween(history[index - 1].date, entry.date)} days between last measurement </h2> )}
             <li id='history'>
-              <span className="date">{entry.date}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Weight: {entry.measurements.weight}kg &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fat Mass: {entry.measurements.fat}% <br />
-               &nbsp;Muscle Mass: {entry.measurements.muscle}% &nbsp;&nbsp;&nbsp;&nbsp; Water: {entry.measurements.water}%
+              <span className="date">{entry.date}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Weight: {entry.measurements.weight}kg &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fat Mass: {entry.measurements.fat}% <br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Muscle Mass: {entry.measurements.muscle}% ({calculateMuscleKg(entry.measurements.weight, entry.measurements.muscle)} kg)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Water: {entry.measurements.water}%
             </li>
           </div>
         ))}

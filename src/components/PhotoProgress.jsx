@@ -1,4 +1,4 @@
-                                          import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 const PhotoProgress = ({ onBack }) => {
@@ -7,16 +7,20 @@ const PhotoProgress = ({ onBack }) => {
   // Load stored photos on mount (safe parse)
   useEffect(() => {
     const raw = localStorage.getItem("progressPhotos");
-    if (raw) {
-      try {
-        const storedPhotos = JSON.parse(raw) || [];
-        setPhotos(storedPhotos);
-      } catch (err) {
-        console.error("Failed to parse progressPhotos from localStorage:", err);
-        // If data is corrupted, remove it so it doesn't crash later
-        localStorage.removeItem("progressPhotos");
-        setPhotos([]);
-      }
+    if (!raw) {
+      setPhotos([]);
+      return;
+    }
+    try {
+      const storedPhotos = JSON.parse(raw) || [];
+      // ensure storedPhotos is an array of objects
+      if (!Array.isArray(storedPhotos)) throw new Error("progressPhotos is not an array");
+      setPhotos(storedPhotos);
+    } catch (err) {
+      console.error("Failed to parse progressPhotos from localStorage:", err);
+      // clear corrupted data so it doesn't crash next time
+      localStorage.removeItem("progressPhotos");
+      setPhotos([]);
     }
   }, []);
 
@@ -42,16 +46,20 @@ const PhotoProgress = ({ onBack }) => {
         return updatedPhotos;
       });
 
-      // Reset file input after read completes so the same file can be reselected later
+      // Reset the input after read completes
       try {
         event.target.value = "";
       } catch (err) {
-        // ignore - some environments may not allow resetting; logging for debugging
         console.warn("Unable to reset file input value:", err);
       }
     };
 
-    reader.readAsDataURL(file);
+    // start reading
+    try {
+      reader.readAsDataURL(file);
+    } catch (err) {
+      console.error("FileReader failed:", err);
+    }
   };
 
   const handleClearHistory = () => {
@@ -66,6 +74,11 @@ const PhotoProgress = ({ onBack }) => {
     }
   };
 
+  // Create a safe list to render: filter out anything that lacks a usable url or date
+  const safePhotos = Array.isArray(photos)
+    ? photos.filter((p) => p && typeof p.url === "string" && p.url.length > 0 && (p.date || p.date === 0))
+    : [];
+
   return (
     <div>
       <h1 className="Photoh1">Photo Progress</h1>
@@ -79,24 +92,36 @@ const PhotoProgress = ({ onBack }) => {
 
       {/* Photo History */}
       <div>
-        {photos.map((photo, index) => {
+        {safePhotos.map((photo, index) => {
           let daysBetween = null;
 
-          if (index > 0) {
-            const prev = new Date(photos[index - 1].date);
-            const curr = new Date(photo.date);
+          try {
+            if (index > 0) {
+              const prev = new Date(safePhotos[index - 1].date);
+              const curr = new Date(photo.date);
 
-            const prevDateOnly = new Date(prev.getFullYear(), prev.getMonth(), prev.getDate());
-            const currDateOnly = new Date(curr.getFullYear(), curr.getMonth(), curr.getDate());
-
-            const diffTime = currDateOnly - prevDateOnly;
-            daysBetween = Math.round(diffTime / (1000 * 60 * 60 * 24));
+              if (isFinite(prev.getTime()) && isFinite(curr.getTime())) {
+                const prevDateOnly = new Date(prev.getFullYear(), prev.getMonth(), prev.getDate());
+                const currDateOnly = new Date(curr.getFullYear(), curr.getMonth(), curr.getDate());
+                const diffTime = currDateOnly - prevDateOnly;
+                daysBetween = Math.round(diffTime / (1000 * 60 * 60 * 24));
+              } else {
+                // invalid dates — don't crash, just leave daysBetween null
+                daysBetween = null;
+              }
+            }
+          } catch (err) {
+            console.error("Error calculating daysBetween for photo index", index, err);
+            daysBetween = null;
           }
 
           return (
-            <div key={index} className="relative">
-              <img src={photo.url} alt="Progress" className="photosize" />
-              <p className="Photodates">{new Date(photo.date).toLocaleDateString()}</p>
+            <div key={photo.date || index} className="relative">
+              {/* protect image load with alt text and width/height (helps avoid layout shift) */}
+              <img src={photo.url} alt={`Progress ${index + 1}`} className="photosize" />
+              <p className="Photodates">
+                {isFinite(new Date(photo.date).getTime()) ? new Date(photo.date).toLocaleDateString() : "Unknown Date"}
+              </p>
               {daysBetween !== null && (
                 <p className="PhotoDiff">⏳ {daysBetween} {daysBetween === 1 ? "day" : "days"} since last photo</p>
               )}
@@ -106,7 +131,7 @@ const PhotoProgress = ({ onBack }) => {
       </div>
 
       <button onClick={onBack} id="backPhoto">Back</button>
-      {photos.length > 0 && (
+      {safePhotos.length > 0 && (
         <button onClick={handleClearHistory} className="ClearPhoto">Clear Last Entry</button>
       )}
     </div>
@@ -118,4 +143,3 @@ PhotoProgress.propTypes = {
 };
 
 export default PhotoProgress;
-                                    

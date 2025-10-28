@@ -1,47 +1,67 @@
-import { useState, useEffect } from "react";
-import PropTypes from 'prop-types';
+                                          import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
 const PhotoProgress = ({ onBack }) => {
   const [photos, setPhotos] = useState([]);
 
-  PhotoProgress.propTypes = {
-    onBack: PropTypes.func.isRequired
-  };
-
-  // Load stored photos on mount
+  // Load stored photos on mount (safe parse)
   useEffect(() => {
-    const storedPhotos = JSON.parse(localStorage.getItem("progressPhotos")) || [];
-    setPhotos(storedPhotos);
+    const raw = localStorage.getItem("progressPhotos");
+    if (raw) {
+      try {
+        const storedPhotos = JSON.parse(raw) || [];
+        setPhotos(storedPhotos);
+      } catch (err) {
+        console.error("Failed to parse progressPhotos from localStorage:", err);
+        // If data is corrupted, remove it so it doesn't crash later
+        localStorage.removeItem("progressPhotos");
+        setPhotos([]);
+      }
+    }
   }, []);
 
   // Function to handle file selection
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const newPhoto = {
-          url: reader.result,
-          date: new Date().getTime(),
-        };
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
 
-        setPhotos(prevPhotos => {
-          const updatedPhotos = [...prevPhotos, newPhoto];
-          localStorage.setItem("progressPhotos", JSON.stringify(updatedPhotos));
-          return updatedPhotos;
-        });
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const newPhoto = {
+        url: reader.result,
+        date: new Date().getTime(),
       };
-      reader.readAsDataURL(file);
 
-      // ✅ Reset file input so the same photo can be reselected if needed
-      event.target.value = "";
-    }
+      setPhotos((prevPhotos) => {
+        const updatedPhotos = [...prevPhotos, newPhoto];
+        try {
+          localStorage.setItem("progressPhotos", JSON.stringify(updatedPhotos));
+        } catch (err) {
+          console.error("Failed to write progressPhotos to localStorage:", err);
+        }
+        return updatedPhotos;
+      });
+
+      // Reset file input after read completes so the same file can be reselected later
+      try {
+        event.target.value = "";
+      } catch (err) {
+        // ignore - some environments may not allow resetting; logging for debugging
+        console.warn("Unable to reset file input value:", err);
+      }
+    };
+
+    reader.readAsDataURL(file);
   };
 
   const handleClearHistory = () => {
     if (photos.length > 0) {
       const updatedPhotos = photos.slice(0, -1);
-      localStorage.setItem('progressPhotos', JSON.stringify(updatedPhotos));
+      try {
+        localStorage.setItem("progressPhotos", JSON.stringify(updatedPhotos));
+      } catch (err) {
+        console.error("Failed to write progressPhotos to localStorage:", err);
+      }
       setPhotos(updatedPhotos);
     }
   };
@@ -93,5 +113,9 @@ const PhotoProgress = ({ onBack }) => {
   );
 };
 
+PhotoProgress.propTypes = {
+  onBack: PropTypes.func.isRequired,
+};
+
 export default PhotoProgress;
-                                                                                                                
+                                    

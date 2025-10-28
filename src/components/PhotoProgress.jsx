@@ -22,13 +22,19 @@ const PhotoProgress = ({ onBack }) => {
       reader.onloadend = () => {
         const newPhoto = {
           url: reader.result,
-          date: new Date().getTime() // Store timestamp
+          date: new Date().getTime(),
         };
-        const updatedPhotos = [...photos, newPhoto];
-        setPhotos(updatedPhotos);
-        localStorage.setItem("progressPhotos", JSON.stringify(updatedPhotos));
+
+        setPhotos(prevPhotos => {
+          const updatedPhotos = [...prevPhotos, newPhoto];
+          localStorage.setItem("progressPhotos", JSON.stringify(updatedPhotos));
+          return updatedPhotos;
+        });
       };
       reader.readAsDataURL(file);
+
+      // ✅ Reset file input so the same photo can be reselected if needed
+      event.target.value = "";
     }
   };
 
@@ -56,12 +62,10 @@ const PhotoProgress = ({ onBack }) => {
         {photos.map((photo, index) => {
           let daysBetween = null;
 
-          // Calculate calendar day difference if not the first photo
           if (index > 0) {
             const prev = new Date(photos[index - 1].date);
             const curr = new Date(photo.date);
 
-            // Strip time from both dates
             const prevDateOnly = new Date(prev.getFullYear(), prev.getMonth(), prev.getDate());
             const currDateOnly = new Date(curr.getFullYear(), curr.getMonth(), curr.getDate());
 
@@ -90,3 +94,4 @@ const PhotoProgress = ({ onBack }) => {
 };
 
 export default PhotoProgress;
+                                                                                                                

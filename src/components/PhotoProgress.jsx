@@ -71,6 +71,65 @@ const PhotoProgress = ({ onBack }) => {
     }
   };
 
+  // Convert a stored data URL into a File object we can share.
+  const dataUrlToFile = (dataUrl, filename) => {
+    const [header, base64] = dataUrl.split(",");
+    const mimeMatch = header.match(/data:(.*?);/);
+    const mime = mimeMatch ? mimeMatch[1] : "image/jpeg";
+    const binary = atob(base64);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    return new File([bytes], filename, { type: mime });
+  };
+
+  // Save / share the real image files via the native share sheet.
+  // Use this in the OLD app to get photos out, then re-upload them in the new app.
+  const handleSharePhotos = async () => {
+    if (photos.length === 0) return;
+
+    const ext = (mime) => (mime && mime.includes("png") ? "png" : "jpg");
+
+    // Preferred: share all files at once.
+    try {
+      const files = photos.map((p, i) => {
+        const dateStr = new Date(p.date).toISOString().slice(0, 10);
+        const f = dataUrlToFile(p.url, `progress-${dateStr}-${i + 1}.jpg`);
+        return new File([f], `progress-${dateStr}-${i + 1}.${ext(f.type)}`, { type: f.type });
+      });
+
+      if (navigator.canShare && navigator.canShare({ files })) {
+        await navigator.share({ files, title: "Progress Photos" });
+        return;
+      }
+    } catch (err) {
+      if (err && err.name === "AbortError") return; // user cancelled
+      // fall through to one-by-one
+    }
+
+    // Fallback: share one photo at a time (some devices only allow single files).
+    try {
+      for (let i = 0; i < photos.length; i++) {
+        const p = photos[i];
+        const dateStr = new Date(p.date).toISOString().slice(0, 10);
+        const file = dataUrlToFile(p.url, `progress-${dateStr}-${i + 1}.jpg`);
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          // eslint-disable-next-line no-await-in-loop
+          await navigator.share({ files: [file], title: `Progress photo ${i + 1}` });
+        } else {
+          alert(
+            "Your app can't share files directly. Easiest alternative: open each photo and take a screenshot, then re-upload it in the new app."
+          );
+          return;
+        }
+      }
+    } catch (err) {
+      if (err && err.name === "AbortError") return;
+      alert(
+        "Sharing was blocked. Alternative: take a screenshot of each photo and re-upload it in the new app."
+      );
+    }
+  };
+
   return (
     <div>
       <h1 className="Photoh1">Photo Progress</h1>
@@ -124,6 +183,11 @@ const PhotoProgress = ({ onBack }) => {
       {photos.length > 0 && (
         <button onClick={handleClearHistory} className="ClearPhoto">
           Clear Last Entry
+        </button>
+      )}
+      {photos.length > 0 && (
+        <button onClick={handleSharePhotos} className="SharePhoto">
+          Save / Share Photos
         </button>
       )}
     </div>

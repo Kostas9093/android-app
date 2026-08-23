@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
@@ -9,6 +9,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const HistoryPage = ({ onBack }) => {
   const [history, setHistory] = useState([]);
+  const bottomRef = useRef(null);
 
   HistoryPage.propTypes= { onBack: PropTypes.func.isRequired}
 
@@ -16,6 +17,13 @@ const HistoryPage = ({ onBack }) => {
     const savedHistory = JSON.parse(localStorage.getItem('measurementHistory')) || [];
     setHistory(savedHistory);
   }, []);
+
+  // Jump straight to the most recent (bottom) entry once the list is rendered.
+  useEffect(() => {
+    if (history.length > 0 && bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }, [history]);
 
   const handleClearHistory = () => {
     if (history.length > 0) {
@@ -38,18 +46,29 @@ const HistoryPage = ({ onBack }) => {
 };
 
 
-  const handleSendEmail = () => {
+  const handleSendEmail = async () => {
+    // Format the history data (no "days between" lines).
+    const emailBody = history
+      .map(entry =>
+        `Date: ${entry.date}\nWeight: ${entry.measurements.weight}kg\nFat Mass: ${entry.measurements.fat}%\nMuscle Mass: ${entry.measurements.muscle}%\nWater: ${entry.measurements.water}%`
+      )
+      .join('\n\n');
+
+    // Preferred: native share sheet. Works reliably inside Android/WebView apps
+    // and lets the user pick Gmail or any email/messaging app.
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'Measurement History', text: emailBody });
+        return;
+      } catch (err) {
+        if (err && err.name === 'AbortError') return; // user cancelled the share sheet
+        // otherwise fall through to the mailto fallback
+      }
+    }
+
+    // Fallback for browsers/devices without the share sheet.
     const email = prompt('Enter your email:');
     if (!email) return;
-
-    // Format the history data
-    const emailBody = history
-      .map(entry => 
-        `Date: ${entry.date}\nWeight: ${entry.measurements.weight}kg\nFat Mass: ${entry.measurements.fat}%\nMuscle Mass: ${entry.measurements.muscle}%\nWater: ${entry.measurements.water}%\n\n`
-      )
-      .join('');
-
-    // Open email client with pre-filled email
     const mailtoLink = `mailto:${email}?subject=Measurement History&body=${encodeURIComponent(emailBody)}`;
     window.location.href = mailtoLink;
   };
@@ -106,6 +125,7 @@ const HistoryPage = ({ onBack }) => {
           </div>
         ))}
       </ul>
+      <div ref={bottomRef} />
 
       <button id='back' onClick={onBack}>Back</button>
       

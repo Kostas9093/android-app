@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import DataBackup from './DataBackup';
 
 const WelcomePage = ({ onStart, onOpenCalculator, onOpenPhoto }) => {
 
@@ -19,7 +18,6 @@ const WelcomePage = ({ onStart, onOpenCalculator, onOpenPhoto }) => {
       <div className="calculator-box" onClick={onOpenPhoto} >
         <h2>Add a picture of your progress</h2>
       </div>
-      <DataBackup />
     </div>
   );
 };

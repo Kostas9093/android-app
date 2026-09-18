@@ -2,12 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { useLanguage } from '../LanguageContext';
 
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 
 const HistoryPage = ({ onBack }) => {
+  const { t } = useLanguage();
   const [history, setHistory] = useState([]);
   const bottomRef = useRef(null);
 
@@ -46,6 +48,7 @@ const HistoryPage = ({ onBack }) => {
 };
 
 
+<<<<<<< HEAD
   const handleSendEmail = async () => {
     // Format the history data (no "days between" lines).
     const emailBody = history
@@ -68,6 +71,10 @@ const HistoryPage = ({ onBack }) => {
 
     // Fallback for browsers/devices without the share sheet.
     const email = prompt('Enter your email:');
+=======
+  const handleSendEmail = () => {
+    const email = prompt(t('enterEmail'));
+>>>>>>> c16c561 (Add English/Greek language switcher across all pages)
     if (!email) return;
     const mailtoLink = `mailto:${email}?subject=Measurement History&body=${encodeURIComponent(emailBody)}`;
     window.location.href = mailtoLink;
@@ -79,28 +86,28 @@ const HistoryPage = ({ onBack }) => {
   labels: history.map((entry) => entry.date), // Labels based on the dates
   datasets: [
     {
-      label: 'Weight (kg)',
+      label: t('chartWeight'),
       data: history.map((entry) => entry.measurements.weight),
       borderColor: 'rgb(25, 54, 216)',
       backgroundColor: 'rgba(75, 192, 192, 0.2)',
       fill: false,
     },
     {
-      label: 'Fat Mass (%)',
+      label: t('chartFat'),
       data: history.map((entry) => entry.measurements.fat),
       borderColor: 'rgb(228, 160, 15)',
       backgroundColor: 'rgba(255, 99, 132, 0.2)',
       fill: false,
     },
     {
-      label: 'Muscle Mass (%)',
+      label: t('chartMuscle'),
       data: history.map((entry) => entry.measurements.muscle),
       borderColor: 'rgb(235, 90, 54)',
       backgroundColor: 'rgba(54, 162, 235, 0.2)',
       fill: false,
     },
     {
-      label: 'Water (%)',
+      label: t('chartWater'),
       data: history.map((entry) => entry.measurements.water),
       borderColor: 'rgb(102, 250, 255)',
       backgroundColor: 'rgba(153, 102, 255, 0.2)',
@@ -112,25 +119,25 @@ const HistoryPage = ({ onBack }) => {
 
   return (
     <div>
-      <h1 id="Historyh2">Measurement History</h1>
+      <h1 id="Historyh2">{t('measurementHistory')}</h1>
    {/* Render Chart.js Line Chart */}
    {history.length > 0 && ( <div> <Line data={chartData} options={{ responsive: true }} /> </div> )}
       <ul id="historyul"> {history.map((entry, index) => (
           <div key={index}> {index > 0 && (
-              <h2> {calculateDaysBetween(history[index - 1].date, entry.date)} days between last measurement </h2> )}
+              <h2> {t('daysBetween', { value: calculateDaysBetween(history[index - 1].date, entry.date) })} </h2> )}
             <li id='history'>
-              <span className="date">{entry.date}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Weight: {entry.measurements.weight}kg &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fat Mass: {entry.measurements.fat}% <br />
-              &nbsp;&nbsp;&nbsp;&nbsp; Muscle Mass: {entry.measurements.muscle}% ({calculateMuscleKg(entry.measurements.weight, entry.measurements.muscle)} kg)&nbsp;&nbsp;&nbsp;&nbsp; Water: {entry.measurements.water}%
+              <span className="date">{entry.date}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {t('labelWeight')} {entry.measurements.weight}kg &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{t('labelFat')} {entry.measurements.fat}% <br />
+              &nbsp;&nbsp;&nbsp;&nbsp; {t('labelMuscle')} {entry.measurements.muscle}% ({calculateMuscleKg(entry.measurements.weight, entry.measurements.muscle)} kg)&nbsp;&nbsp;&nbsp;&nbsp; {t('labelWater')} {entry.measurements.water}%
             </li>
           </div>
         ))}
       </ul>
       <div ref={bottomRef} />
 
-      <button id='back' onClick={onBack}>Back</button>
+      <button id='back' onClick={onBack}>{t('back')}</button>
       
-      {history.length > 0 && ( <button id='clear' onClick={handleClearHistory}>Clear Last Entry</button> )}
-      {history.length > 0 &&(<button id='email' onClick={handleSendEmail}>Email History</button>)}
+      {history.length > 0 && ( <button id='clear' onClick={handleClearHistory}>{t('clearLastEntry')}</button> )}
+      {history.length > 0 &&(<button id='email' onClick={handleSendEmail}>{t('emailHistory')}</button>)}
     </div>
   );
 };

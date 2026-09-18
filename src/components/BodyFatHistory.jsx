@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { useLanguage } from '../LanguageContext';
 
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 
 const BodyFatHistory = ({ onBack }) => {
+  const { t } = useLanguage();
   const [history, setHistory] = useState([]);
 
   BodyFatHistory.propTypes= { onBack: PropTypes.func.isRequired}
@@ -33,7 +35,7 @@ const BodyFatHistory = ({ onBack }) => {
   };
 
   const handleSendEmail = () => {
-    const email = prompt('Enter your email:');
+    const email = prompt(t('enterEmail'));
     if (!email) return;
 
     // Format the history data
@@ -54,7 +56,7 @@ const BodyFatHistory = ({ onBack }) => {
     datasets: [
      
       {
-        label: 'Fat Mass (%)',
+        label: t('chartFat'),
         data: history.map((entry) => entry.bodyFat),
         borderColor: 'rgb(228, 160, 15)',
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
@@ -66,20 +68,20 @@ const BodyFatHistory = ({ onBack }) => {
   
   return (
     <div>
-      <h1 id="Historyh2">Fat Measurement History</h1>
+      <h1 id="Historyh2">{t('fatMeasurementHistory')}</h1>
    {history.length > 0 && ( <div> <div> <Line data={chartData} options={{ responsive: true }} /> </div></div> )}
       <ul id="historyul"> {history.map((entry, index) => (
           <div key={index}> {index > 0 && (
-              <h2> {calculateDaysBetween(history[index - 1].timestamp, entry.timestamp)} days between last measurement </h2> )}
+              <h2> {t('daysBetween', { value: calculateDaysBetween(history[index - 1].timestamp, entry.timestamp) })} </h2> )}
               <li id="caliperli"> <span className="date">{entry.timestamp}&nbsp;&nbsp;&nbsp;&nbsp;</span>
-              <span>{entry.bodyFat}% Body Fat</span></li>
+              <span>{t('bodyFatEntry', { value: entry.bodyFat })}</span></li>
           </div>
         ))}
       </ul>
 
-      <button id='back' onClick={onBack}>Back</button>
-      {history.length > 0 && ( <button id='clear' onClick={handleClearHistory}>Clear Last Entry</button> )}
-      {history.length > 0 &&(<button id='email' onClick={handleSendEmail}>Email History</button>)}
+      <button id='back' onClick={onBack}>{t('back')}</button>
+      {history.length > 0 && ( <button id='clear' onClick={handleClearHistory}>{t('clearLastEntry')}</button> )}
+      {history.length > 0 &&(<button id='email' onClick={handleSendEmail}>{t('emailHistory')}</button>)}
     </div>
   );
 };

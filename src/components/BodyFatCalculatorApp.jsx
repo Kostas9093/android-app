@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useLanguage } from '../LanguageContext';
 
 const BodyFatCalculatorApp = ({ showFatHistory , onBack }) => {
+    const { t } = useLanguage();
     const [gender, setGender] = useState('');
     const [age, setAge] = useState('');
     const [measurements, setMeasurements] = useState({ chest: '', abdomen: '', thigh: '' });
@@ -19,7 +21,7 @@ const BodyFatCalculatorApp = ({ showFatHistory , onBack }) => {
         });
     };
     const handleExit = () => {
-        if (window.confirm("Are you sure you want to exit?")) {
+        if (window.confirm(t('confirmExit'))) {
           window.close(); // This will attempt to close the browser tab
         }
       };
@@ -76,49 +78,49 @@ const BodyFatCalculatorApp = ({ showFatHistory , onBack }) => {
 
     return (
         <div className="body-fat-calculator">
-            <h1>Body Fat Calliper Calculator</h1>
+            <h1>{t('caliperTitle')}</h1>
         <br></br>
             <form onSubmit={handleSubmit}>
                 
-                    <label>Gender:</label>
+                    <label>{t('gender')}</label>
                     <select className="field" value={gender} onChange={(e) => setGender(e.target.value)} required>
-                        <option value="">Select</option> <option value="male">Male</option> <option value="female">Female</option>
+                        <option value="">{t('select')}</option> <option value="male">{t('male')}</option> <option value="female">{t('female')}</option>
                     </select>
                 
-                <label>Age: </label>
+                <label>{t('age')} </label>
                 <input  type="number" value={age} onChange={(e) => setAge(e.target.value)} required  /> <br />
      
-                <label>Chest Skinfold (mm): </label>
+                <label>{t('chest')} </label>
                 <input type="number" name="chest" value={measurements.chest} onChange={handleMeasurementChange} required /> <br />
                 
-                <label>Abdomen Skinfold (mm): </label>
+                <label>{t('abdomen')} </label>
                 <input type="number" name="abdomen" value={measurements.abdomen} onChange={handleMeasurementChange} required /> <br />
                 
-                <label>Thigh Skinfold (mm): </label>
+                <label>{t('thigh')} </label>
                 <input type="number" name="thigh" value={measurements.thigh} onChange={handleMeasurementChange} required /> <br />
 
-                <button id="backCaliper" onClick={onBack}>Back</button>
-                <button id="caliper" type="submit">Submit</button>
+                <button id="backCaliper" onClick={onBack}>{t('back')}</button>
+                <button id="caliper" type="submit">{t('submit')}</button>
             </form> <br />
 
-            {bodyFat && ( <div> <h2 id="resulth" >Your Body Fat Percentage:</h2> <p id="resultp">{bodyFat}%&nbsp;&nbsp; Body Fat</p> </div> )}
+            {bodyFat && ( <div> <h2 id="resulth" >{t('yourBodyFat')}</h2> <p id="resultp">{t('bodyFatValue', { value: bodyFat })}</p> </div> )}
 
-            <button id="exitCaliper" onClick={handleExit}>Exit</button> <button id="CaliperHistoryB" onClick={showFatHistory}>Show History</button>
+            <button id="exitCaliper" onClick={handleExit}>{t('exit')}</button> <button id="CaliperHistoryB" onClick={showFatHistory}>{t('showHistory')}</button>
             <br></br>
             
             {history.length > 0 && ( 
                 <div id="caliperhistory">
                {history.map((entry, index) => (
                 <div key={index} > {index > 0 && (
-                <h2 id="caliperh2"> {calculateDaysBetween(history[index - 1].timestamp, entry.timestamp)} days since last measurement </h2>
+                <h2 id="caliperh2"> {t('daysSince', { value: calculateDaysBetween(history[index - 1].timestamp, entry.timestamp) })} </h2>
                  )} 
                 <li id="caliperli"> <span className="date">{entry.timestamp}&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span>{entry.bodyFat}% Body Fat</span></li>
+                <span>{t('bodyFatEntry', { value: entry.bodyFat })}</span></li>
                 </div>
         ))}
     </div>
 )}
-{history.length > 0 && ( <button id='clearh' onClick={handleClearHistory} >Clear Last Entry</button> )}
+{history.length > 0 && ( <button id='clearh' onClick={handleClearHistory} >{t('clearLastEntry')}</button> )}
 
      </div>
     );

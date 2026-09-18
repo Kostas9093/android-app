@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import localforage from "localforage";
+import { useLanguage } from "../LanguageContext";
 
 const PhotoProgress = ({ onBack }) => {
+  const { t } = useLanguage();
   const [photos, setPhotos] = useState([]);
   const [viewer, setViewer] = useState(null); // { url, date } of the photo shown full screen
 
@@ -74,7 +76,7 @@ const PhotoProgress = ({ onBack }) => {
 
   return (
     <div>
-      <h1 className="Photoh1">Photo Progress</h1>
+      <h1 className="Photoh1">{t('photoProgress')}</h1>
 
       <input
         type="file"
@@ -116,8 +118,9 @@ const PhotoProgress = ({ onBack }) => {
               </p>
               {daysBetween !== null && (
                 <p className="PhotoDiff">
-                  ⏳ {daysBetween}{" "}
-                  {daysBetween === 1 ? "day" : "days"} since last photo
+                  ⏳ {daysBetween === 1
+                    ? t('daySincePhoto', { value: daysBetween })
+                    : t('daysSincePhoto', { value: daysBetween })}
                 </p>
               )}
             </div>
@@ -126,11 +129,11 @@ const PhotoProgress = ({ onBack }) => {
       </div>
 
       <button onClick={onBack} id="backPhoto">
-        Back
+        {t('back')}
       </button>
       {photos.length > 0 && (
         <button onClick={handleClearHistory} className="ClearPhoto">
-          Clear Last Entry
+          {t('clearLastEntry')}
         </button>
       )}
 

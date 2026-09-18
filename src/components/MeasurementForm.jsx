@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useLanguage } from '../LanguageContext';
 
 const ProgressDisplay = ({ progress, onBackToMain }) => {
+  const { t } = useLanguage();
+
   if (!progress) return null;
 
   if (progress.firstTime) {
     return (
       <div className="new">
-        <h2>Progress Results</h2>
-        <p>First time entry — progress comparison will be available next time.</p>
-        <button id='back' onClick={onBackToMain}>Back</button>
+        <h2>{t('progressResults')}</h2>
+        <p>{t('firstTimeEntry')}</p>
+        <button id='back' onClick={onBackToMain}>{t('back')}</button>
       </div>
     );
   }
@@ -18,12 +21,12 @@ const ProgressDisplay = ({ progress, onBackToMain }) => {
 
   return (
     <div className="new">
-      <h2>Progress Results</h2>
-      <p>{weightDiff > 0 ? `You gained ${weightDiff} kg` : weightDiff < 0 ? `You lost ${Math.abs(weightDiff).toFixed(2)} kg` : `No weight change`}</p>
-      <p>{fatDiff > 0 ? `You gained ${Math.abs(fatDiff).toFixed(2)}% Fat Mass` : fatDiff < 0 ? `You lost ${Math.abs(fatDiff).toFixed(2)}% Fat Mass` : `No Fat Mass change`} ({Math.abs(fatKilosDiff).toFixed(2)} kg of Fat)</p>
-      <p>{muscleDiff > 0 ? `You gained ${Math.abs(muscleDiff).toFixed(2)}% Muscle Mass` : muscleDiff < 0 ? `You lost ${Math.abs(muscleDiff).toFixed(2)}% Muscle Mass` : `No Muscle Mass change`} ({Math.abs(musleKilosDiff).toFixed(2)} kg of Muscle)</p>
-      <p>{waterDiff > 0 ? `You gained ${Math.abs(waterDiff).toFixed(2)}% Water` : waterDiff < 0 ? `You lost ${Math.abs(waterDiff).toFixed(2)}% Water` : `No Water change`}</p>
-      <button id='back' onClick={onBackToMain}>Back</button>
+      <h2>{t('progressResults')}</h2>
+      <p>{weightDiff > 0 ? t('gainedWeight', { value: weightDiff }) : weightDiff < 0 ? t('lostWeight', { value: Math.abs(weightDiff).toFixed(2) }) : t('noWeightChange')}</p>
+      <p>{fatDiff > 0 ? t('gainedFat', { value: Math.abs(fatDiff).toFixed(2) }) : fatDiff < 0 ? t('lostFat', { value: Math.abs(fatDiff).toFixed(2) }) : t('noFatChange')} ({t('kgOfFat', { value: Math.abs(fatKilosDiff).toFixed(2) })})</p>
+      <p>{muscleDiff > 0 ? t('gainedMuscle', { value: Math.abs(muscleDiff).toFixed(2) }) : muscleDiff < 0 ? t('lostMuscle', { value: Math.abs(muscleDiff).toFixed(2) }) : t('noMuscleChange')} ({t('kgOfMuscle', { value: Math.abs(musleKilosDiff).toFixed(2) })})</p>
+      <p>{waterDiff > 0 ? t('gainedWater', { value: Math.abs(waterDiff).toFixed(2) }) : waterDiff < 0 ? t('lostWater', { value: Math.abs(waterDiff).toFixed(2) }) : t('noWaterChange')}</p>
+      <button id='back' onClick={onBackToMain}>{t('back')}</button>
     </div>
   );
 };
@@ -34,6 +37,7 @@ ProgressDisplay.propTypes = {
 };
 
 const MeasurementForm = ({ onShowHistory, onBackToMain, showResults, setShowResults }) => {
+  const { t } = useLanguage();
   const [newMeasurements, setNewMeasurements] = useState({ weight: '', fat: '', muscle: '', water: '' });
   const [progress, setProgress] = useState(null);
   const [measurementHistory, setMeasurementHistory] = useState([]);
@@ -98,30 +102,30 @@ const MeasurementForm = ({ onShowHistory, onBackToMain, showResults, setShowResu
   };
 
   const handleExit = () => {
-    if (window.confirm("Are you sure you want to exit?")) {
+    if (window.confirm(t('confirmExit'))) {
       window.close();
     }
   };
 
   return (
     <div id="mform">
-      <h1>Weight Progress Tracker</h1>
+      <h1>{t('appTitle')}</h1>
       <br />
       {!showResults ? (
         <form onSubmit={handleSubmit}>
-          <h2>Current Measurements</h2>
-          <input type="number" placeholder="Current Weight Kg" name="weight" value={newMeasurements.weight} onChange={handleChange} />
-          <input type="number" placeholder="Current Fat Mass %" name="fat" value={newMeasurements.fat} onChange={handleChange} />
-          <input type="number" placeholder="Current Muscle Mass %" name="muscle" value={newMeasurements.muscle} onChange={handleChange} />
-          <input type="number" placeholder="Current Water %" name="water" value={newMeasurements.water} onChange={handleChange} />
-          <button id="back" onClick={onBackToMain}>Back</button>
-          <button id="compare" type="submit">Submit</button>
+          <h2>{t('currentMeasurements')}</h2>
+          <input type="number" placeholder={t('phWeight')} name="weight" value={newMeasurements.weight} onChange={handleChange} />
+          <input type="number" placeholder={t('phFat')} name="fat" value={newMeasurements.fat} onChange={handleChange} />
+          <input type="number" placeholder={t('phMuscle')} name="muscle" value={newMeasurements.muscle} onChange={handleChange} />
+          <input type="number" placeholder={t('phWater')} name="water" value={newMeasurements.water} onChange={handleChange} />
+          <button id="back" onClick={onBackToMain}>{t('back')}</button>
+          <button id="compare" type="submit">{t('submit')}</button>
         </form>
       ) : (
         <ProgressDisplay progress={progress} onBackToMain={onBackToMain} />
       )}
-      <button id="exit" onClick={handleExit}>Exit</button>
-      <button id="showHistory" onClick={onShowHistory}>Show History</button>
+      <button id="exit" onClick={handleExit}>{t('exit')}</button>
+      <button id="showHistory" onClick={onShowHistory}>{t('showHistory')}</button>
     </div>
   );
 };

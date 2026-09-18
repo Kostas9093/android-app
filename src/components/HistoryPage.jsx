@@ -48,7 +48,6 @@ const HistoryPage = ({ onBack }) => {
 };
 
 
-<<<<<<< HEAD
   const handleSendEmail = async () => {
     // Format the history data (no "days between" lines).
     const emailBody = history
@@ -70,11 +69,7 @@ const HistoryPage = ({ onBack }) => {
     }
 
     // Fallback for browsers/devices without the share sheet.
-    const email = prompt('Enter your email:');
-=======
-  const handleSendEmail = () => {
     const email = prompt(t('enterEmail'));
->>>>>>> c16c561 (Add English/Greek language switcher across all pages)
     if (!email) return;
     const mailtoLink = `mailto:${email}?subject=Measurement History&body=${encodeURIComponent(emailBody)}`;
     window.location.href = mailtoLink;
